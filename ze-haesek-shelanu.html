@@ -1,0 +1,689 @@
+<title>שדה אליעזר - זה העסק שלנו</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Assistant:wght@400;600;700&display=swap">
+<style id="se-style">
+/* Layout: a green "field" hero band with the two logos and the wordmark; a search + category strip; a responsive grid of business cards; an editors-only management panel above the grid. */
+:root {
+  --bg: #f4f6f0;
+  --surface: #ffffff;
+  --fg: #1d281a;
+  --muted: #5a6654;
+  --line: #d6ddcf;
+  --accent: #3f6b2a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e2ebd7;
+  --hero: #2f5320;
+  --hero-ink: #f4f8ee;
+  --hero-soft: rgba(255,255,255,.14);
+  --wheat: #c8962e;
+  --wheat-soft: #f6ebcf;
+  --wheat-ink: #5c4210;
+  --danger: #b23b2e;
+  --focus: #2f6fb3;
+  --display: "Rubik", "Arial Hebrew", Arial, sans-serif;
+  --body: "Assistant", "Arial Hebrew", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131911; --surface: #1c2419; --fg: #e7eee1; --muted: #a2ad9a; --line: #33402e;
+    --accent: #8fc06f; --accent-ink: #132010; --accent-soft: #253420;
+    --hero: #1f3417; --hero-ink: #eef5e6; --hero-soft: rgba(255,255,255,.10);
+    --wheat: #e0b453; --wheat-soft: #3a2f16; --wheat-ink: #f3d793; --danger: #ef7b6c; --focus: #79b0ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131911; --surface: #1c2419; --fg: #e7eee1; --muted: #a2ad9a; --line: #33402e;
+  --accent: #8fc06f; --accent-ink: #132010; --accent-soft: #253420;
+  --hero: #1f3417; --hero-ink: #eef5e6; --hero-soft: rgba(255,255,255,.10);
+  --wheat: #e0b453; --wheat-soft: #3a2f16; --wheat-ink: #f3d793; --danger: #ef7b6c; --focus: #79b0ee;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16.5px; line-height: 1.55; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 1120px; margin: 0 auto; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+
+/* hero */
+.hero { background: var(--hero); color: var(--hero-ink); position: relative; overflow: hidden; }
+.hero::after {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 46px; pointer-events: none;
+  background: repeating-linear-gradient(100deg, var(--hero-soft) 0 22px, transparent 22px 40px);
+}
+.hero .inner { padding-block: 26px 74px; display: flex; flex-direction: column; gap: 22px; position: relative; z-index: 1; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.moshav { display: flex; align-items: center; gap: 12px; }
+.moshav-logo {
+  width: 64px; height: 64px; border-radius: 50%; background: var(--surface); display: grid; place-items: center;
+  overflow: hidden; flex: none; border: 3px solid var(--hero-soft);
+}
+.moshav-logo img { width: 100%; height: 100%; object-fit: contain; }
+/* An uploaded logo is usually wide, so it gets a rounded white plate instead of the circle */
+.moshav-logo.has-img { width: auto; height: 80px; box-sizing: border-box; border-radius: 14px; padding: 6px 12px; background: #fff; }
+.moshav-logo.has-img img { height: 66px; width: auto; max-width: none; }
+.moshav-logo .ph { font-family: var(--display); font-weight: 700; color: var(--accent); font-size: 12px; text-align: center; line-height: 1.15; padding: 6px; }
+.moshav-name { font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: .02em; }
+.moshav-name small { display: block; font-family: var(--body); font-weight: 400; opacity: .8; font-size: 13.5px; }
+.hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; }
+@media (max-width: 720px) { .hero-main { grid-template-columns: 1fr; } }
+.wordmark { display: flex; align-items: center; gap: 16px; }
+.wordmark svg { width: clamp(64px, 12vw, 96px); height: auto; flex: none; }
+.wordmark h1 { font-size: clamp(38px, 8vw, 72px); font-weight: 800; line-height: 1; letter-spacing: -.01em; }
+.wordmark h1 span { color: var(--wheat); }
+.brand-img { max-height: 120px; max-width: min(360px, 100%); object-fit: contain; display: block; }
+.hero-sub { margin: 12px 0 0; font-size: clamp(17px, 2.4vw, 20px); max-width: 52ch; opacity: .92; }
+.hero-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat { background: var(--hero-soft); border-radius: 12px; padding: 10px 16px; min-width: 110px; }
+.stat b { display: block; font-family: var(--display); font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; opacity: .85; }
+.btn {
+  font: inherit; font-weight: 700; border-radius: 10px; padding: 10px 16px; cursor: pointer; text-decoration: none;
+  border: 1px solid var(--accent); background: var(--surface); color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.wheat { background: var(--wheat); border-color: var(--wheat); color: #1f1a0e; }
+.btn.small { padding: 6px 10px; font-size: 14px; font-weight: 600; }
+/* the main call to action: big, high-contrast, sits under the hero intro */
+.btn.cta {
+  margin-top: 20px; padding: 16px 34px; font-size: 21px; font-weight: 700; border-radius: 16px;
+  font-family: var(--display); gap: 10px; box-shadow: 0 8px 22px rgba(0,0,0,.28);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn.cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.32); }
+.btn.cta .plus { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #1f1a0e; color: var(--wheat); font-size: 22px; line-height: 1; }
+@media (max-width: 560px) { .btn.cta { display: flex; justify-content: center; width: 100%; box-sizing: border-box; } }
+.admin-entry { margin-top: 12px; }
+.btn.ghost { border-color: var(--line); color: var(--muted); background: transparent; }
+.btn.danger { border-color: var(--danger); color: var(--danger); background: transparent; }
+.btn[disabled] { opacity: .55; cursor: default; }
+.hero .btn.ghost { color: var(--hero-ink); border-color: var(--hero-soft); }
+
+/* toolbar */
+.toolbar { margin-top: -30px; position: relative; z-index: 2; }
+.toolbar .box {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 24px rgba(20,40,10,.08);
+}
+.search { display: flex; gap: 10px; }
+.search input {
+  flex: 1; min-width: 0; font: inherit; font-size: 17px; padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+}
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font: inherit; font-size: 14.5px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--fg); cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip .n { opacity: .7; font-variant-numeric: tabular-nums; }
+.chip.zero { opacity: .55; }
+.src-tag { align-self: flex-start; font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+.chip.zero[aria-pressed="true"] { opacity: 1; }
+.cat-label { font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--muted); margin-top: 4px; }
+.chips.pick .chip { font-weight: 400; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.chips.pick .chip input { margin: 0; accent-color: var(--accent); }
+.chips.pick .chip:has(input:checked) { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.lbl { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+
+main .inner { padding-block: 26px 40px; display: flex; flex-direction: column; gap: 22px; }
+.seg { display: flex; gap: 4px; padding: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; flex-wrap: wrap; }
+.seg button { flex: 1 1 auto; font: inherit; font-weight: 700; font-size: 15px; border: 0; border-radius: 9px; padding: 8px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 3px rgba(20,40,10,.15); }
+.seg .n { opacity: .65; font-variant-numeric: tabular-nums; }
+.group { display: flex; flex-direction: column; gap: 10px; }
+.group-head { display: flex; align-items: center; gap: 10px; }
+.group-head h2 { font-size: 24px; }
+.group-head .n { font-family: var(--display); font-weight: 700; font-size: 14px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 2px 10px; }
+.g-exp .group-head .n { background: var(--wheat-soft); color: var(--wheat-ink); }
+.g-exp { padding-top: 10px; }
+.card.exp { border-color: var(--wheat); }
+.card.exp .mono { color: var(--wheat-ink); background: repeating-linear-gradient(100deg, transparent 0 22px, rgba(200,150,46,.12) 22px 40px), var(--wheat-soft); }
+.card.exp .cat { color: var(--wheat-ink); }
+.perk.vol { background: var(--accent); color: var(--accent-ink); }
+.offers { display: flex; flex-wrap: wrap; gap: 6px; }
+.offers span { font-size: 13.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--wheat-soft); color: var(--wheat-ink); }
+.result-line { color: var(--muted); font-size: 15px; margin: 0; }
+
+/* cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+@media (max-width: 400px) { .grid { grid-template-columns: 1fr; } }
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column; min-width: 0;
+}
+.media { aspect-ratio: 16 / 10; background: var(--accent-soft); position: relative; max-width: 100%; }
+.media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mono {
+  width: 100%; height: 100%; display: grid; place-items: center; font-family: var(--display); font-weight: 800;
+  font-size: 64px; color: var(--accent);
+  background: repeating-linear-gradient(100deg, transparent 0 22px, rgba(63,107,42,.08) 22px 40px), var(--accent-soft);
+}
+.perk {
+  position: absolute; top: 10px; inset-inline-start: 10px; background: var(--wheat); color: #1f1a0e;
+  font-weight: 700; font-size: 13px; padding: 4px 10px; border-radius: 999px;
+}
+.card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.sample-tag { align-self: flex-start; font-size: 12.5px; font-weight: 700; color: var(--danger); border: 1px dashed var(--danger); border-radius: 6px; padding: 1px 8px; }
+.cat { font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: .02em; }
+.card h3 { font-size: 21px; line-height: 1.2; }
+.prof { color: var(--muted); font-size: 15px; margin-top: -4px; }
+.desc { margin: 0; }
+.perk-text { background: var(--wheat-soft); color: var(--wheat-ink); border-radius: 8px; padding: 6px 10px; font-size: 14.5px; font-weight: 600; }
+.svc-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.svc-list li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+.svc-list .p { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.meta { display: flex; flex-direction: column; gap: 3px; font-size: 14.5px; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 600; }
+.contact { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 6px; }
+.phone-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.phone { font-family: var(--display); font-weight: 600; font-size: 19px; direction: ltr; unicode-bidi: isolate; user-select: all; font-variant-numeric: tabular-nums; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; font-size: 14.5px; }
+.links .ltr { direction: ltr; unicode-bidi: isolate; word-break: break-all; }
+details.more { border-top: 1px solid var(--line); padding-top: 8px; }
+details.more summary { cursor: pointer; font-weight: 600; color: var(--accent); font-size: 15px; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+.gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; display: block; max-width: 100%; }
+.admin-row { display: flex; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--line); padding: 10px 18px; background: var(--bg); }
+
+/* empty + join */
+.empty {
+  border: 2px dashed var(--line); border-radius: 16px; padding: 36px 20px; text-align: center;
+  display: flex; flex-direction: column; gap: 10px; align-items: center;
+}
+.empty h2 { font-size: 24px; }
+.empty p { margin: 0; color: var(--muted); max-width: 48ch; }
+.join {
+  background: var(--accent-soft); border-radius: 16px; padding: 22px; display: flex; gap: 16px;
+  align-items: center; justify-content: space-between; flex-wrap: wrap;
+}
+.join h2 { font-size: 22px; }
+.join p { margin: 4px 0 0; color: var(--muted); }
+footer { color: var(--muted); font-size: 14px; text-align: center; padding-block: 0 32px; }
+
+/* admin panel */
+.panel { background: var(--surface); border: 2px solid var(--wheat); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.panel h2 { font-size: 20px; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+.f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.f label { font-weight: 600; font-size: 14.5px; }
+.f input, .f select, .f textarea {
+  font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 9px; padding: 9px 11px; width: 100%;
+}
+.f textarea { min-height: 90px; resize: vertical; }
+.hint { font-size: 13.5px; color: var(--muted); }
+.note { background: var(--wheat-soft); color: var(--wheat-ink); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
+.status { font-weight: 600; color: var(--accent); }
+.status.err { color: var(--danger); }
+.thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
+.thumb { position: relative; width: 88px; height: 88px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb button { position: absolute; top: 3px; inset-inline-start: 3px; width: 24px; height: 24px; border-radius: 50%; border: 0; background: var(--surface); color: var(--fg); cursor: pointer; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.logo-prev { width: 72px; height: 72px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); display: grid; place-items: center; overflow: hidden; }
+.logo-prev img { width: 100%; height: 100%; object-fit: contain; }
+@media (prefers-reduced-motion: no-preference) { .card { transition: transform .15s ease; } .card:hover { transform: translateY(-2px); } }
+</style>
+<div id="root" dir="rtl" lang="he"></div>
+<script type="application/json" id="se-data">{"site":{"moshavLogo":"data:image/jpeg;base64,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","brandLogo":"","intro":"העסקים, בעלי המקצוע ואנשי המומחיות של המושב, במקום אחד. קרוב לבית וללב. מוזמנים למצוא את מי שאתם צריכים, ממש כאן ביישוב.","formUrl":"https://claude.ai/artifact/CiBo7fR6UCkFU89McdnL2h"},"businesses":[]}</script>
+<script id="se-app">
+(() => {
+  const RESET = ':root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}';
+  const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Assistant:wght@400;600;700&display=swap">';
+  const CATEGORIES = ["קולינריה ומוצרי חקלאות","חינוך ושיעורים פרטיים","מוסיקה","ביוטי וטיפוח","בייביסיטר וטיפול בילדים","בנייה","שיפוצים ותחזוקת בית","חשמל, אינסטלציה ומיזוג","אדריכלות ועיצוב פנים","טכנולוגיה ומחשבים","שיווק ופרסום","אומנות ומלאכת יד","צילום ואירועים","רפואי ואלטרנטיבי","טיפול רגשי ואימון אישי","אירוח ולינה","כושר וספורט","גינון, חקלאות ובעלי חיים","רכב ותחבורה","ניקיון ושירותי בית","ייעוץ, משפטים, ביטוח והנהלת חשבונות","אחר"];
+
+  const EXP_CATEGORIES = ["אומנות: ציור ורישום","אומנות: קרמיקה ופיסול","אומנות: צילום ווידאו","מוזיקה, נגינה ושירה","מלאכת יד: סריגה, תפירה ורקמה","ריתוך ועבודות מתכת","נגרות ועבודות עץ","תיקונים קטנים בבית","מחשבים, טלפונים וטכנולוגיה","תיקון מכשירי חשמל, אופניים וכלים","גינון, צמחים וחקלאות","בישול ואפייה","שפות ותרגום","כתיבה, עריכה וניסוח מכתבים","ניירת, בירוקרטיה וזכויות","ספורט, כושר ותנועה","עזרה ראשונה ובריאות","אחר"];
+  const DATA = JSON.parse(document.getElementById("se-data").textContent);
+  DATA.site = DATA.site || {}; DATA.businesses = DATA.businesses || [];
+  const root = document.getElementById("root");
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  DATA.businesses.forEach(b => { if (!b.kind) b.kind = "biz"; });
+  const isExp = b => b.kind === "expert";
+  const ui = { q: "", cat: "", kind: "", admin: false, canEdit: false, tab: "add", editing: null, confirmDel: null, status: "", statusErr: false, busy: false };
+  let artifactApi = null;
+
+  // ---------- republish: whole document from state ----------
+  function buildDocument(data) {
+    const json = JSON.stringify(data).replace(/</g, "\\u003c");
+    const style = document.getElementById("se-style").textContent;
+    const app = document.getElementById("se-app").textContent;
+    return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + RESET + '</style></head><body>\n'
+      + '<title>שדה אליעזר - זה העסק שלנו</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n' + FONTS + '\n'
+      + '<style id="se-style">' + style + '</style>\n'
+      + '<div id="root" dir="rtl" lang="he"></div>\n'
+      + '<script type="application/json" id="se-data">' + json + '<\/script>\n'
+      + '<script id="se-app">' + app + '<\/script>\n</body></html>';
+  }
+  async function save(next, okMsg) {
+    if (!artifactApi) { setStatus("השמירה זמינה רק לעורכי הדף.", true); return; }
+    ui.busy = true; setStatus("שומר ומפרסם…");
+    try {
+      await artifactApi.publish(buildDocument(next));
+      setStatus(okMsg || "נשמר. הדף נטען מחדש…");
+    } catch (e) {
+      const m = {
+        conflict: "הדף עודכן במקביל ממקום אחר. הוא נטען מחדש, נסו שוב אחרי הטעינה.",
+        not_writer: "אין לך הרשאת עריכה לדף הזה.", not_granted: "אין לך הרשאת עריכה לדף הזה.",
+        too_large: "הדף גדול מדי. נסו להסיר כמה תמונות.", rate_limited: "יותר מדי שמירות ברצף. חכו דקה ונסו שוב."
+      }[e && e.code] || "השמירה לא הצליחה. נסו שוב בעוד רגע.";
+      setStatus(m, true);
+    } finally { ui.busy = false; render(); }
+  }
+  function setStatus(msg, err) { ui.status = msg; ui.statusErr = !!err; const el = document.getElementById("status"); if (el) { el.textContent = msg; el.className = "status" + (err ? " err" : ""); } }
+
+  // ---------- helpers ----------
+  const digits = s => String(s || "").replace(/\D/g, "");
+  const waNumber = p => { let d = digits(p); if (!d) return ""; if (d.startsWith("0")) d = "972" + d.slice(1); return d; };
+  const hrefSafe = u => { const s = String(u || "").trim(); if (!s) return ""; const full = /^https?:\/\//i.test(s) ? s : "https://" + s; return /^https?:\/\/[^\s]+$/i.test(full) ? full : ""; };
+  const uid = () => "b" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  function imageToDataURL(file, max, type, quality) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        const g = c.getContext("2d"); if (type === "image/jpeg") { g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); }
+        g.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); resolve(c.toDataURL(type, quality));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("bad image")); };
+      img.src = url;
+    });
+  }
+
+  // ---------- parse the emailed summary from the registration form ----------
+  function parseSummary(text) {
+    const kv = {}, services = [];
+    for (const raw of String(text).split(/\r?\n/)) {
+      const line = raw.replace(/^\[[^\]]*\]\s*[^:]*:\s*/, m => (/^\[\d/.test(m) ? "" : m)).trim();
+      if (!line || /^—.*—$/.test(line)) continue;
+      if (/^[•·\-*]\s*/.test(line) && !line.includes(": ")) {
+        const s = line.replace(/^[•·\-*]\s*/, ""), i = s.lastIndexOf(" – ");
+        services.push(i > 0 ? { name: s.slice(0, i).trim(), price: s.slice(i + 3).trim() } : { name: s, price: "" });
+        continue;
+      }
+      const i = line.indexOf(": ");
+      if (i > 0) kv[line.slice(0, i).trim()] = line.slice(i + 2).trim();
+    }
+    const allowed = kv["מותר לפרסם"] ? kv["מותר לפרסם"].split(/,\s*/) : null;
+    const may = f => !allowed || allowed.includes(f);
+    const hidden = [];
+    const take = (field, val) => { if (may(field)) return val || ""; if (val) hidden.push(field); return ""; };
+    const categories = (kv["תחומים"] || kv["תחום"] || "").split(" | ").map(c => c.trim().replace(/^אחר: /, "")).filter(Boolean);
+    const discount = kv["הטבה לתושבים"] && kv["הטבה לתושבים"] !== "לא" ? kv["הטבה לתושבים"] : "";
+    const expert = (kv["סוג רישום"] || "").startsWith("איש");
+    const biz = {
+      id: uid(), kind: expert ? "expert" : "biz",
+      bizName: (expert ? kv["מומחיות"] : kv["שם העסק"]) || "", profession: (expert ? kv["רמת ניסיון"] : kv["מקצוע"]) || "", categories,
+      offer: kv["אשמח לעזור ב"] || "", availability: kv["זמינות"] || "", tools: kv["ציוד"] || "",
+      description: kv["תיאור"] || "",
+      ownerName: take("שם מלא", kv["שם"]),
+      phone: take("טלפון", kv["נייד"]), phone2: take("טלפון", kv["טלפון נוסף"]),
+      email: take("דוא״ל", kv["דוא״ל"]),
+      farmNo: take("מספר משק / כתובת", [kv["משק / בית"], kv["כתובת"]].filter(Boolean).join(", ")),
+      website: take("אתר ורשתות", kv["אתר"]), social: take("אתר ורשתות", kv["רשתות"]),
+      bizAddress: kv["כתובת העסק"] || "",
+      contactPref: kv["התקשרות מועדפת"] || "", location: kv["מיקום פעילות"] || "", area: kv["אזור שירות"] || "",
+      hours: kv["שעות פעילות"] || "", years: kv["שנות ניסיון"] || "", license: kv["רישיון / הסמכה"] || "",
+      services, showPrices: !(kv["הצגת מחירים"] || "").startsWith("לא"), discount, photos: [],
+      photosAllowed: may("תמונות")
+    };
+    return { biz, hidden: [...new Set(hidden)], found: Object.keys(kv).length > 0 };
+  }
+  // Records carry categories[]; older records may still hold a single `category` string.
+  const catsOf = b => (b.categories && b.categories.length) ? b.categories : (b.category ? [b.category] : []);
+  const blankBiz = () => ({ id: uid(), kind: "biz", offer: "", availability: "", tools: "", bizName: "", profession: "", categories: [], description: "", ownerName: "", phone: "", phone2: "", email: "", farmNo: "", bizAddress: "", website: "", social: "", contactPref: "", location: "", area: "", hours: "", years: "", license: "", services: [], showPrices: true, discount: "", photos: [], photosAllowed: true });
+
+  // ---------- rendering ----------
+  const roofSvg = `<svg viewBox="0 0 96 84" aria-hidden="true"><path d="M6 44 L48 8 L90 44" fill="none" stroke="var(--wheat)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 40 V76 H76 V40" fill="none" stroke="var(--hero-ink)" stroke-width="6" stroke-linejoin="round"/><path d="M48 76 V52" stroke="var(--hero-ink)" stroke-width="5" stroke-linecap="round"/><path d="M48 60 C40 58 37 52 38 46 C45 47 48 52 48 60 Z M48 56 C56 54 59 48 58 42 C51 43 48 48 48 56 Z" fill="var(--wheat)"/></svg>`;
+
+  function heroHtml() {
+    const s = DATA.site, n = DATA.businesses.filter(b => !isExp(b)).length;
+    const nExp = DATA.businesses.filter(isExp).length;
+    const moshavLogo = s.moshavLogo ? `<img src="${esc(s.moshavLogo)}" alt="לוגו מושב שדה אליעזר">` : `<span class="ph">שדה<br>אליעזר</span>`;
+    const brand = s.brandLogo
+      ? `<img class="brand-img" src="${esc(s.brandLogo)}" alt="זה העסק שלנו"><h1 class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">זה העסק שלנו</h1>`
+      : `<div class="wordmark">${roofSvg}<h1>זה העסק <span>שלנו</span></h1></div>`;
+    return `<header class="hero gutter"><div class="inner">
+      <div class="topbar">
+        <div class="moshav"><div class="moshav-logo${s.moshavLogo ? " has-img" : ""}">${moshavLogo}</div><div class="moshav-name">קהילת מושב שדה אליעזר<small>עסקים, בעלי מקצוע ואנשי מומחיות</small></div></div>
+      </div>
+      <div class="hero-main">
+        <div>${brand}<p class="hero-sub">${esc(s.intro)}</p>
+          ${s.formUrl ? `<a class="btn wheat cta" href="${esc(hrefSafe(s.formUrl))}" target="_blank" rel="noopener"><span class="plus" aria-hidden="true">+</span>הצטרפות למאגר</a>` : ""}</div>
+        <div class="hero-stats"><div class="stat"><b>${n}</b><span>עסקים ובעלי מקצוע</span></div><div class="stat exp"><b>${nExp}</b><span>אנשי מומחיות</span></div></div>
+      </div>
+    </div></header>`;
+  }
+
+  function toolbarHtml() {
+    const counts = {};
+    const pool = DATA.businesses.filter(b => !ui.kind || b.kind === ui.kind);
+    pool.forEach(b => catsOf(b).forEach(c => { counts[c] = (counts[c] || 0) + 1; }));
+    // Always show the full, ordered category lists (empty ones dimmed). "הכול" shows both lists under their own labels.
+    const groups = ui.kind === "biz" ? [["", CATEGORIES]] : ui.kind === "expert" ? [["", EXP_CATEGORIES]]
+      : [["תחומי עסקים ובעלי מקצוע", CATEGORIES], ["תחומי מומחיות", EXP_CATEGORIES]];
+    const listed = new Set(groups.flatMap(g => g[1]));
+    const extra = Object.keys(counts).filter(c => !listed.has(c)); // custom categories typed under "אחר"
+    if (extra.length) groups[groups.length - 1] = [groups[groups.length - 1][0], [...groups[groups.length - 1][1], ...extra]];
+    const chip = c => `<button type="button" class="chip${counts[c] || !pool.length ? "" : " zero"}" data-cat="${esc(c)}" aria-pressed="${ui.cat === c}">${esc(c)} <span class="n">${counts[c] || 0}</span></button>`;
+    const nB = DATA.businesses.filter(b => !isExp(b)).length, nE = DATA.businesses.length - nB;
+    return `<div class="toolbar gutter"><div class="inner"><div class="box">
+      <div class="seg" role="group" aria-label="מה מחפשים">
+        <button type="button" data-kind="" aria-pressed="${!ui.kind}">הכול</button>
+        <button type="button" data-kind="biz" aria-pressed="${ui.kind === "biz"}">עסקים ובעלי מקצוע <span class="n">${nB}</span></button>
+        <button type="button" data-kind="expert" aria-pressed="${ui.kind === "expert"}">אנשי מומחיות <span class="n">${nE}</span></button>
+      </div>
+      <div class="search"><input id="q" type="search" placeholder="חיפוש: חשמלאי, עוגות, ריתוך, מחשבים…" aria-label="חיפוש במאגר" value="${esc(ui.q)}"></div>
+      <div class="chips" role="group" aria-label="סינון לפי תחום">
+        <button type="button" class="chip" data-cat="" aria-pressed="${!ui.cat}">כל התחומים <span class="n">${pool.length}</span></button>
+      </div>
+      ${groups.map(([label, list]) => `${label ? `<div class="cat-label">${label}</div>` : ""}
+        <div class="chips" role="group" aria-label="${label || "סינון לפי תחום"}">${list.map(chip).join("")}</div>`).join("")}
+    </div></div></div>`;
+  }
+
+  function cardHtml(b) {
+    const exp = isExp(b);
+    const first = b.photos && b.photos[0];
+    const media = first ? `<img src="${esc(first)}" alt="${esc(b.bizName)}" loading="lazy">` : `<div class="mono" aria-hidden="true">${esc((b.bizName || "?").trim().charAt(0))}</div>`;
+    const svcs = (b.services || []).filter(s => s.name);
+    const svcHtml = svcs.length ? `<ul class="svc-list">${svcs.map(s => `<li><span>${esc(s.name)}</span><span class="p">${esc(b.showPrices && s.price ? s.price : (b.showPrices ? "" : "לפי הצעת מחיר"))}</span></li>`).join("")}</ul>` : "";
+    const wa = waNumber(b.phone);
+    const site = hrefSafe(b.website), social = hrefSafe(/^(https?:\/\/|www\.|[\w-]+\.[a-z]{2,})/i.test(b.social || "") ? b.social : "");
+    const meta = [
+      b.bizAddress && `<span><b>כתובת העסק:</b> ${esc(b.bizAddress)} · <a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(b.bizAddress)}" target="_blank" rel="noopener">במפה</a></span>`,
+      b.availability && `<span><b>זמינות:</b> ${esc(b.availability)}</span>`,
+      b.tools && `<span><b>ציוד:</b> ${esc(b.tools)}</span>`,
+      b.area && `<span><b>אזור שירות:</b> ${esc(b.area)}</span>`,
+      b.hours && `<span><b>שעות:</b> ${esc(b.hours)}</span>`
+    ].filter(Boolean).join("");
+    const more = [
+      !exp && b.ownerName && `<span><b>בעל/ת העסק:</b> ${esc(b.ownerName)}</span>`,
+      b.years && `<span><b>שנות ניסיון:</b> ${esc(b.years)}</span>`,
+      b.license && `<span><b>רישיון / הסמכה:</b> ${esc(b.license)}</span>`,
+      b.location && `<span><b>איפה:</b> ${esc(b.location)}</span>`,
+      b.farmNo && `<span><b>כתובת במושב:</b> ${esc(b.farmNo)}</span>`,
+      b.contactPref && `<span><b>התקשרות מועדפת:</b> ${esc(b.contactPref)}</span>`
+    ].filter(Boolean).join("");
+    const gallery = (b.photos || []).length > 1 ? `<div class="gallery">${b.photos.slice(1).map(p => `<img src="${esc(p)}" alt="" loading="lazy">`).join("")}</div>` : "";
+    const admin = ui.admin ? `<div class="admin-row">
+      <button type="button" class="btn small" data-edit="${esc(b.id)}">עריכה</button>
+      ${ui.confirmDel === b.id
+        ? `<button type="button" class="btn small danger" data-del-yes="${esc(b.id)}">להסיר מהמאגר?</button><button type="button" class="btn small ghost" data-del-no>ביטול</button>`
+        : `<button type="button" class="btn small danger" data-del="${esc(b.id)}">הסרה</button>`}
+    </div>` : "";
+    const vol = exp && /התנדבות|קהילתיים/.test(b.offer || "");
+    const offers = exp && b.offer ? `<div class="offers">${b.offer.split(/,\s*/).filter(Boolean).map(o => `<span>${esc(o)}</span>`).join("")}</div>` : "";
+    return `<article class="card${exp ? " exp" : ""}">
+      <div class="media">${media}${vol ? `<span class="perk vol">מוכן/ה להתנדב</span>` : (b.discount ? `<span class="perk">הטבה לתושבים</span>` : "")}</div>
+      <div class="card-body">
+        ${b.sample ? `<div class="sample-tag">עסק לדוגמה · לא אמיתי</div>` : ""}
+        ${b.source === "google" ? `<div class="src-tag">מתוך Google Maps · טרם אושר ע״י בעל/ת העסק</div>` : ""}
+        ${catsOf(b).length ? `<div class="cat">${catsOf(b).map(esc).join(" · ")}</div>` : ""}
+        <h3>${esc(b.bizName)}</h3>
+        ${exp ? ((b.ownerName || b.profession) ? `<div class="prof">${esc([b.ownerName, b.profession].filter(Boolean).join(" · "))}</div>` : "")
+              : (b.profession ? `<div class="prof">${esc(b.profession)}</div>` : "")}
+        ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
+        ${offers}
+        ${b.discount ? `<div class="perk-text">${esc(b.discount)}</div>` : ""}
+        ${svcHtml}
+        ${meta ? `<div class="meta">${meta}</div>` : ""}
+        ${(more || gallery) ? `<details class="more"><summary>עוד פרטים${gallery ? " ותמונות" : ""}</summary><div class="meta" style="margin-top:6px">${more}</div>${gallery}</details>` : ""}
+        <div class="contact">
+          ${b.phone ? `<div class="phone-row"><span class="phone">${esc(b.phone)}</span>
+            <button type="button" class="btn small ghost" data-copy="${esc(b.phone)}">העתקה</button>
+            ${wa ? `<a class="btn small primary" href="https://wa.me/${wa}" target="_blank" rel="noopener">וואטסאפ</a>` : ""}</div>` : ""}
+          ${b.phone2 ? `<div class="links">טלפון נוסף: <span class="ltr">${esc(b.phone2)}</span></div>` : ""}
+          <div class="links">
+            ${b.email ? `<span class="ltr">${esc(b.email)}</span>` : ""}
+            ${site ? `<a href="${esc(site)}" target="_blank" rel="noopener">לאתר</a>` : ""}
+            ${social ? `<a href="${esc(social)}" target="_blank" rel="noopener">רשתות חברתיות</a>` : (b.social ? `<span class="ltr">${esc(b.social)}</span>` : "")}
+          </div>
+        </div>
+      </div>${admin}
+    </article>`;
+  }
+
+  function filtered() {
+    const q = ui.q.trim().toLowerCase();
+    return DATA.businesses.filter(b => {
+      if (ui.kind && b.kind !== ui.kind) return false;
+      if (ui.cat && !catsOf(b).includes(ui.cat)) return false;
+      if (!q) return true;
+      const hay = [b.bizName, b.profession, ...catsOf(b), b.description, b.ownerName, b.offer, b.tools, ...(b.services || []).map(s => s.name)].join(" ").toLowerCase();
+      return q.split(/\s+/).every(w => hay.includes(w));
+    }).sort((a, b) => (a.bizName || "").localeCompare(b.bizName || "", "he"));
+  }
+
+  function listHtml() {
+    if (!DATA.businesses.length) {
+      return `<div class="empty"><h2>המאגר נפתח</h2><p>העסקים של שדה אליעזר יופיעו כאן ברגע שיצטרפו. יש לך עסק או מקצוע? מלאו את טופס ההרשמה, וכרטיס העסק שלכם יעלה לכאן.</p>
+        ${DATA.site.formUrl ? `<a class="btn primary" href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">לטופס ההרשמה</a>` : ""}</div>`;
+    }
+    const list = filtered();
+    if (!list.length) return `<div class="empty"><h2>לא נמצאו תוצאות</h2><p>נסו מילת חיפוש אחרת או בחרו ״הכול״.</p></div>`;
+    const bizList = list.filter(b => !isExp(b)), expList = list.filter(isExp);
+    const block = (title, sub, items, cls) => items.length ? `<section class="group ${cls}">
+        <div class="group-head"><h2>${title}</h2><span class="n">${items.length}</span></div>
+        <p class="result-line">${sub}</p>
+        <div class="grid">${items.map(cardHtml).join("")}</div></section>` : "";
+    return block("עסקים ובעלי מקצוע", "שירותים ומוצרים של תושבי המושב", bizList, "g-biz")
+      + block("אנשי מומחיות", "שכנים עם תחביב, כישרון או ידע, שישמחו לייעץ, ללמד ולעזור", expList, "g-exp");
+  }
+
+  function joinHtml() {
+    if (!DATA.businesses.length || !DATA.site.formUrl) return "";
+    return `<section class="join"><div><h2>גם לך יש עסק, תחביב או כישרון?</h2><p>ההרשמה למאגר פתוחה לכל תושבי שדה אליעזר וללא עלות, לבעלי עסקים ולאנשי מומחיות.</p></div>
+      <a class="btn primary" href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">לטופס ההרשמה</a></section>`;
+  }
+
+  // ---------- admin panel ----------
+  function field(id, label, val, opts = {}) {
+    const cls = opts.full ? "f full" : "f";
+    if (opts.type === "textarea") return `<div class="${cls}"><label for="${id}">${label}</label><textarea id="${id}">${esc(val)}</textarea>${opts.hint ? `<span class="hint">${opts.hint}</span>` : ""}</div>`;
+    if (opts.type === "select") return `<div class="${cls}"><label for="${id}">${label}</label><select id="${id}"><option value="">בחירה…</option>${opts.options.map(o => `<option${o === val ? " selected" : ""}>${esc(o)}</option>`).join("")}</select></div>`;
+    return `<div class="${cls}"><label for="${id}">${label}</label><input id="${id}" type="text" value="${esc(val)}">${opts.hint ? `<span class="hint">${opts.hint}</span>` : ""}</div>`;
+  }
+  function editorHtml() {
+    const e = ui.editing; if (!e) return "";
+    const b = e.biz;
+    const base = b.kind === "expert" ? EXP_CATEGORIES : CATEGORIES;
+    const mine = catsOf(b);
+    const cats = [...mine.filter(c => !base.includes(c)), ...base];
+    return `<div class="form-grid" id="editor" data-bid="${esc(b.id)}">
+      ${e.hidden && e.hidden.length ? `<div class="note full">לפי בחירת בעל/ת העסק, הפרטים האלה לא יפורסמו והושמטו: ${esc(e.hidden.join(", "))}.</div>` : ""}
+      ${b.photosAllowed === false ? `<div class="note full">בעל/ת העסק לא אישר/ה פרסום תמונות.</div>` : ""}
+      <div class="f full"><label for="e_kind">סוג רישום</label><select id="e_kind">
+        <option value="biz"${b.kind !== "expert" ? " selected" : ""}>עסק / בעל מקצוע</option>
+        <option value="expert"${b.kind === "expert" ? " selected" : ""}>איש/אשת מומחיות</option></select>
+        <span class="hint">שינוי הסוג מעדכן את רשימת התחומים.</span></div>
+      ${field("e_bizName", b.kind === "expert" ? "במה הוא/היא טוב/ה? *" : "שם העסק *", b.bizName)}
+      ${field("e_profession", b.kind === "expert" ? "רמת ניסיון" : "מקצוע", b.profession)}
+      <div class="f full"><span class="lbl">תחומים (אפשר כמה)</span><div class="chips pick" id="e_cats">
+        ${cats.map(c => `<label class="chip"><input type="checkbox" value="${esc(c)}"${mine.includes(c) ? " checked" : ""}> ${esc(c)}</label>`).join("")}
+      </div></div>
+      ${field("e_ownerName", "שם בעל/ת העסק", b.ownerName)}
+      ${field("e_description", "תיאור", b.description, { type: "textarea", full: true })}
+      ${b.kind === "expert" ? `
+      ${field("e_offer", "במה ישמח/תשמח לעזור", b.offer, { full: true, hint: "מופרד בפסיקים, לדוגמה: עצה או טיפ בטלפון, עזרה בהתנדבות לשכנים" })}
+      ${field("e_availability", "זמינות", b.availability)}
+      ${field("e_tools", "ציוד או כלים", b.tools)}` : ""}
+      ${field("e_services", "שירותים ומחירים", (b.services || []).map(s => s.price ? `${s.name} – ${s.price}` : s.name).join("\n"), { type: "textarea", full: true, hint: "שירות אחד בכל שורה. מחיר אחרי מקף: ״התקנת מזגן – 350 ₪ לעבודה״" })}
+      <div class="f full"><label><input type="checkbox" id="e_showPrices"${b.showPrices ? " checked" : ""}> להציג מחירים בכרטיס</label></div>
+      ${b.source === "google" ? `<div class="f full"><label><input type="checkbox" id="e_approved"> בעל/ת העסק אישר/ה את הפרסום (מסיר את התג "מתוך Google Maps")</label></div>` : ""}
+      ${field("e_discount", "הטבה לתושבי המושב", b.discount, { hint: "ריק = אין הטבה" })}
+      ${field("e_phone", "טלפון", b.phone)}
+      ${field("e_phone2", "טלפון נוסף", b.phone2)}
+      ${field("e_email", "דוא״ל", b.email)}
+      ${field("e_website", "אתר", b.website)}
+      ${field("e_social", "פייסבוק / אינסטגרם", b.social)}
+      ${field("e_area", "אזור שירות", b.area)}
+      ${field("e_hours", "שעות פעילות", b.hours)}
+      ${field("e_bizAddress", "כתובת בית העסק (כולל יישוב)", b.bizAddress || "")}
+      ${field("e_location", "איפה העסק פועל", b.location)}
+      ${field("e_farmNo", "כתובת במושב", b.farmNo)}
+      ${field("e_years", "שנות ניסיון", b.years)}
+      ${field("e_license", "רישיון / הסמכה", b.license)}
+      ${field("e_contactPref", "התקשרות מועדפת", b.contactPref)}
+      <div class="f full"><span style="font-weight:600;font-size:14.5px">תמונות (הראשונה היא התמונה הראשית, עד 4)</span>
+        <div class="thumbs">${(b.photos || []).map((p, i) => `<div class="thumb"><img src="${esc(p)}" alt=""><button type="button" data-rmphoto="${i}" aria-label="הסרת תמונה">×</button></div>`).join("")}</div>
+        <div class="row"><label class="btn small" for="e_photos">הוספת תמונות</label><input id="e_photos" type="file" accept="image/*" multiple hidden><span class="hint">התמונות מוקטנות אוטומטית</span></div>
+      </div>
+      <div class="row full">
+        <button type="button" class="btn primary" id="saveBiz"${ui.busy ? " disabled" : ""}>${e.isNew ? "הוספה למאגר ופרסום" : "שמירת השינויים"}</button>
+        <button type="button" class="btn ghost" id="cancelEdit">ביטול</button>
+      </div>
+    </div>`;
+  }
+  function panelHtml() {
+    if (!ui.admin) return "";
+    const s = DATA.site;
+    const addTab = ui.editing ? editorHtml() : `
+      <div class="f"><label for="paste">הדביקו כאן את הסיכום שהתקבל במייל</label>
+        <textarea id="paste" style="min-height:150px" placeholder="📋 בקשת הרשמה למאגר העסקים – שדה אליעזר&#10;…"></textarea></div>
+      <div class="row"><button type="button" class="btn primary" id="parseBtn">קריאת הסיכום</button><button type="button" class="btn" id="manualBtn">מילוי ידני</button></div>`;
+    const settingsTab = `<div class="form-grid">
+      <div class="f"><span style="font-weight:600;font-size:14.5px">לוגו מושב שדה אליעזר</span>
+        <div class="row"><div class="logo-prev">${s.moshavLogo ? `<img src="${esc(s.moshavLogo)}" alt="">` : ""}</div>
+        <label class="btn small" for="moshavLogoFile">העלאת לוגו</label><input id="moshavLogoFile" type="file" accept="image/*" hidden>
+        ${s.moshavLogo ? `<button type="button" class="btn small ghost" data-clearlogo="moshavLogo">הסרה</button>` : ""}</div></div>
+      <div class="f"><span style="font-weight:600;font-size:14.5px">לוגו ״זה העסק שלנו״</span>
+        <div class="row"><div class="logo-prev">${s.brandLogo ? `<img src="${esc(s.brandLogo)}" alt="">` : ""}</div>
+        <label class="btn small" for="brandLogoFile">העלאת לוגו</label><input id="brandLogoFile" type="file" accept="image/*" hidden>
+        ${s.brandLogo ? `<button type="button" class="btn small ghost" data-clearlogo="brandLogo">חזרה לסמל המעוצב</button>` : ""}</div>
+        <span class="hint">בלי קובץ, הדף מציג את הסמל המעוצב שבראש הדף.</span></div>
+      ${field("s_intro", "משפט פתיחה", s.intro, { type: "textarea", full: true })}
+      ${field("s_formUrl", "קישור לטופס ההרשמה", s.formUrl, { full: true })}
+      <div class="row full"><button type="button" class="btn primary" id="saveSettings"${ui.busy ? " disabled" : ""}>שמירה ופרסום</button></div>
+    </div>`;
+    return `<section class="panel" aria-label="ניהול המאגר">
+      <div class="row" style="justify-content:space-between"><h2>ניהול המאגר</h2><span class="hint">רק עורכי הדף רואים את החלק הזה</span></div>
+      <div class="tabs">
+        <button type="button" class="chip" data-tab="add" aria-pressed="${ui.tab === "add"}">${ui.editing && !ui.editing.isNew ? "עריכת עסק" : "הוספת עסק"}</button>
+        <button type="button" class="chip" data-tab="settings" aria-pressed="${ui.tab === "settings"}">לוגו והגדרות</button>
+      </div>
+      ${ui.tab === "add" ? addTab : settingsTab}
+      <div id="status" class="status${ui.statusErr ? " err" : ""}" aria-live="polite">${esc(ui.status)}</div>
+    </section>`;
+  }
+
+  function render() {
+    const focusId = document.activeElement && document.activeElement.id;
+    const caret = focusId === "q" ? document.activeElement.selectionStart : null;
+    // keep unsaved editor input across re-renders
+    const ed = document.getElementById("editor");
+    if (ui.editing && ed && ed.dataset.bid === ui.editing.biz.id) readEditor();
+    root.innerHTML = heroHtml() + toolbarHtml()
+      + `<main class="gutter"><div class="inner">${panelHtml()}${listHtml()}${joinHtml()}</div></main>`
+      + `<footer class="gutter"><div class="inner">זה העסק שלנו · מאגר העסקים של מושב שדה אליעזר`
+      + (ui.canEdit ? `<div class="admin-entry"><button class="btn small ghost" id="adminToggle" type="button">${ui.admin ? "סגירת הניהול" : "ניהול המאגר"}</button></div>` : "")
+      + `</div></footer>`;
+    if (focusId) { const el = document.getElementById(focusId); if (el) { el.focus(); if (caret != null) el.setSelectionRange(caret, caret); } }
+  }
+
+  function readEditor() {
+    const v = id => (document.getElementById(id) || {}).value ?? "";
+    const b = ui.editing.biz;
+    if (document.getElementById("e_offer")) Object.assign(b, { offer: v("e_offer").trim(), availability: v("e_availability").trim(), tools: v("e_tools").trim() });
+    Object.assign(b, {
+      kind: v("e_kind") || b.kind || "biz",
+      bizName: v("e_bizName").trim(), profession: v("e_profession").trim(), categories: [...document.querySelectorAll("#e_cats input:checked")].map(i => i.value), category: "", ownerName: v("e_ownerName").trim(),
+      description: v("e_description").trim(), discount: v("e_discount").trim(), phone: v("e_phone").trim(), phone2: v("e_phone2").trim(),
+      email: v("e_email").trim(), website: v("e_website").trim(), social: v("e_social").trim(), area: v("e_area").trim(), hours: v("e_hours").trim(),
+      bizAddress: v("e_bizAddress").trim(), location: v("e_location").trim(), farmNo: v("e_farmNo").trim(), years: v("e_years").trim(), license: v("e_license").trim(), contactPref: v("e_contactPref").trim(),
+      showPrices: !!(document.getElementById("e_showPrices") || {}).checked,
+      source: (document.getElementById("e_approved") || {}).checked ? "" : (b.source || ""),
+      services: v("e_services").split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => { const i = l.lastIndexOf(" – ") > 0 ? l.lastIndexOf(" – ") : l.lastIndexOf(" - "); return i > 0 ? { name: l.slice(0, i).trim(), price: l.slice(i + 3).trim() } : { name: l, price: "" }; })
+    });
+  }
+
+  // ---------- events ----------
+  root.addEventListener("input", e => {
+    if (e.target.id === "q") { ui.q = e.target.value; const m = root.querySelector("main .inner"); m.innerHTML = panelHtml() + listHtml() + joinHtml(); }
+  });
+  root.addEventListener("click", async e => {
+    const t = e.target.closest("button, [data-cat]"); if (!t) return;
+    if (t.dataset.cat !== undefined) { ui.cat = t.dataset.cat; render(); return; }
+    if (t.dataset.kind !== undefined) { ui.kind = t.dataset.kind; ui.cat = ""; render(); return; }
+    if (t.dataset.copy) {
+      const val = t.dataset.copy;
+      try { await navigator.clipboard.writeText(val); t.textContent = "הועתק"; }
+      catch (_) { const span = t.parentElement.querySelector(".phone"); const r = document.createRange(); r.selectNodeContents(span); const s = getSelection(); s.removeAllRanges(); s.addRange(r); t.textContent = "סומן"; }
+      setTimeout(() => { t.textContent = "העתקה"; }, 1600); return;
+    }
+    if (t.id === "adminToggle") {
+      ui.admin = !ui.admin; render();
+      // the button lives in the footer, the panel at the top of the list
+      const p = document.querySelector(".panel"); if (p) p.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (t.dataset.tab) { ui.tab = t.dataset.tab; render(); return; }
+    if (t.id === "parseBtn") {
+      const r = parseSummary(document.getElementById("paste").value);
+      if (!r.found) { setStatus("לא זיהיתי סיכום של הטופס. העתיקו את כל תוכן המייל, או לחצו ״מילוי ידני״.", true); return; }
+      ui.editing = { biz: r.biz, hidden: r.hidden, isNew: true }; setStatus("הפרטים נקראו. בדקו, הוסיפו תמונות ופרסמו."); render(); return;
+    }
+    if (t.id === "manualBtn") { ui.editing = { biz: blankBiz(), hidden: [], isNew: true }; ui.status = ""; render(); return; }
+    if (t.id === "cancelEdit") { ui.editing = null; ui.status = ""; render(); return; }
+    if (t.dataset.rmphoto !== undefined) { readEditor(); ui.editing.biz.photos.splice(+t.dataset.rmphoto, 1); render(); return; }
+    if (t.dataset.edit) {
+      const b = DATA.businesses.find(x => x.id === t.dataset.edit); if (!b) return;
+      ui.editing = { biz: JSON.parse(JSON.stringify(b)), hidden: [], isNew: false }; ui.tab = "add"; ui.status = ""; render();
+      document.querySelector(".panel").scrollIntoView({ block: "start" }); return;
+    }
+    if (t.dataset.del) { ui.confirmDel = t.dataset.del; render(); return; }
+    if (t.dataset.delNo !== undefined) { ui.confirmDel = null; render(); return; }
+    if (t.dataset.delYes) {
+      const next = { ...DATA, businesses: DATA.businesses.filter(x => x.id !== t.dataset.delYes) };
+      ui.confirmDel = null; await save(next, "העסק הוסר. הדף נטען מחדש…"); return;
+    }
+    if (t.id === "saveBiz") {
+      readEditor(); const b = ui.editing.biz;
+      if (!b.bizName) { setStatus("חסר שם עסק.", true); document.getElementById("e_bizName").focus(); return; }
+      b.updatedAt = new Date().toISOString(); if (!b.addedAt) b.addedAt = b.updatedAt;
+      const list = DATA.businesses.filter(x => x.id !== b.id); list.push(b);
+      await save({ ...DATA, businesses: list }, ui.editing.isNew ? "העסק נוסף למאגר. הדף נטען מחדש…" : "השינויים נשמרו. הדף נטען מחדש…"); return;
+    }
+    if (t.dataset.clearlogo) { DATA.site[t.dataset.clearlogo] = ""; render(); setStatus("הלוגו יוסר אחרי ״שמירה ופרסום״."); return; }
+    if (t.id === "saveSettings") {
+      const site = { ...DATA.site, intro: document.getElementById("s_intro").value.trim(), formUrl: document.getElementById("s_formUrl").value.trim() };
+      await save({ ...DATA, site }, "ההגדרות נשמרו. הדף נטען מחדש…"); return;
+    }
+  });
+  root.addEventListener("change", async e => {
+    const t = e.target;
+    if (t.id === "e_kind") { readEditor(); render(); return; }
+    if (t.id === "e_photos") {
+      readEditor(); const b = ui.editing.biz;
+      for (const f of t.files) { if (b.photos.length >= 4) break; if (!f.type.startsWith("image/")) continue; try { b.photos.push(await imageToDataURL(f, 1100, "image/jpeg", 0.78)); } catch (_) {} }
+      render(); return;
+    }
+    if (t.id === "moshavLogoFile" || t.id === "brandLogoFile") {
+      const f = t.files[0]; if (!f) return;
+      try { DATA.site[t.id === "moshavLogoFile" ? "moshavLogo" : "brandLogo"] = await imageToDataURL(f, 600, "image/png"); render(); setStatus("הלוגו מוצג בתצוגה מקדימה. לחצו ״שמירה ופרסום״ כדי לשמור."); }
+      catch (_) { setStatus("לא הצלחתי לקרוא את הקובץ. נסו PNG או JPG.", true); }
+    }
+  });
+
+  render();
+
+  // ---------- editors only: light up management ----------
+  (async () => {
+    if (!window.claude || !window.claude.use) return;
+    try {
+      const [art, user] = await Promise.all([window.claude.use("artifact"), window.claude.use("user")]);
+      if (!art || !user) return;
+      const can = await user.canEdit();
+      if (!can) return;
+      artifactApi = art; ui.canEdit = true; render();
+    } catch (_) {}
+  })();
+})();
+</script>

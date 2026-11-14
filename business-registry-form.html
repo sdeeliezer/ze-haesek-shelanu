@@ -1,0 +1,622 @@
+<title>שדה אליעזר - זה העסק שלנו - הרשמה למאגר</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Layout: one narrow column of numbered form sections on a field-green ground; a sticky progress strip; summary + send at the end. */
+:root {
+  --bg: #f3f5ef;
+  --surface: #ffffff;
+  --fg: #1f2a1c;
+  --muted: #5b6656;
+  --line: #d5dccd;
+  --accent: #3f6b2a;
+  --accent-soft: #e3ecd9;
+  --wheat: #c8962e;
+  --danger: #b23b2e;
+  --focus: #2f6fb3;
+  --display: "Rubik", "Arial Hebrew", Arial, sans-serif;
+  --body: "Assistant", "Arial Hebrew", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a12; --surface: #1d251a; --fg: #e8eee2; --muted: #a3ae9b; --line: #34402f;
+    --accent: #8fc06f; --accent-soft: #26341f; --wheat: #e0b453; --danger: #ef7b6c; --focus: #79b0ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a12; --surface: #1d251a; --fg: #e8eee2; --muted: #a3ae9b; --line: #34402f;
+  --accent: #8fc06f; --accent-soft: #26341f; --wheat: #e0b453; --danger: #ef7b6c; --focus: #79b0ee;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+header.hero { padding-block: 36px 8px; display: flex; flex-direction: column; gap: 10px; }
+.brandrow { display: flex; align-items: center; gap: 12px; }
+/* the logo file has a white background, so it sits on a white plate in both themes */
+.moshav-logo { background: #fff; border-radius: 12px; padding: 5px 10px; border: 1px solid var(--line); line-height: 0; }
+.moshav-logo img { height: 54px; width: auto; display: block; }
+.eyebrow { font-family: var(--display); font-size: 13px; letter-spacing: .06em; color: var(--accent); font-weight: 600; }
+h1 { font-family: var(--display); font-size: clamp(28px, 6vw, 40px); line-height: 1.15; margin: 0; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.furrows { height: 10px; background: repeating-linear-gradient(90deg, var(--accent) 0 18px, transparent 18px 26px); opacity: .25; border-radius: 2px; }
+
+.progress {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg);
+  padding-block: 10px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--line);
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.progress a {
+  font-size: 14px; text-decoration: none; color: var(--muted); padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface);
+}
+.progress a.done { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+
+section.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 22px clamp(16px, 4vw, 28px); display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 70px;
+}
+.sec-head { display: flex; align-items: baseline; gap: 12px; }
+.sec-num {
+  font-family: var(--display); font-weight: 700; color: var(--surface); background: var(--accent);
+  width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; flex: none; font-size: 15px;
+}
+h2 { font-family: var(--display); font-size: 21px; margin: 0; }
+.sec-note { margin: -6px 0 0; color: var(--muted); font-size: 15px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+.grid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+label, .label { font-weight: 600; font-size: 15px; }
+.req::after { content: " *"; color: var(--danger); }
+.hint { font-size: 13.5px; color: var(--muted); }
+.ltr-mail { direction: ltr; unicode-bidi: isolate; font-weight: 700; color: var(--fg); }
+input[type=text], input[type=tel], input[type=email], input[type=url], input[type=number], select, textarea {
+  font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 9px; padding: 10px 12px; width: 100%;
+}
+textarea { min-height: 96px; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible, .chip input:focus-visible + span {
+  outline: 3px solid var(--focus); outline-offset: 2px;
+}
+.invalid input, .invalid select, .invalid textarea { border-color: var(--danger); }
+.err { color: var(--danger); font-size: 13.5px; display: none; }
+.invalid .err { display: block; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chip span {
+  display: inline-block; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--bg); font-size: 15px; cursor: pointer;
+}
+.chip input:checked + span { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+
+.kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .kinds { grid-template-columns: 1fr; } }
+.kind { position: relative; cursor: pointer; }
+.kind input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.kind span { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 14px 16px; border: 2px solid var(--line); border-radius: 12px; background: var(--bg); }
+.kind b { font-family: var(--display); font-size: 17px; }
+.kind small { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
+.kind input:checked + span { border-color: var(--accent); background: var(--accent-soft); }
+.kind input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.services { display: flex; flex-direction: column; gap: 12px; }
+.svc {
+  display: grid; grid-template-columns: 2fr 1fr 1.2fr auto; gap: 10px; align-items: end;
+  padding: 12px; border: 1px dashed var(--line); border-radius: 10px;
+}
+@media (max-width: 560px) { .svc { grid-template-columns: 1fr 1fr; } .svc .svc-name { grid-column: 1 / -1; } }
+.btn {
+  font: inherit; font-weight: 600; border-radius: 9px; padding: 10px 16px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--surface); color: var(--accent);
+}
+.btn.primary { background: var(--accent); color: var(--surface); }
+.btn.ghost { border-color: var(--line); color: var(--muted); padding: 8px 10px; }
+.btn.wheat { background: var(--wheat); border-color: var(--wheat); color: #1f1a0e; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.drop {
+  border: 2px dashed var(--line); border-radius: 12px; padding: 20px; text-align: center; color: var(--muted);
+  background: var(--bg); cursor: pointer;
+}
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.thumb { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); max-width: 100%; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb button {
+  position: absolute; top: 4px; inset-inline-start: 4px; border: 0; border-radius: 50%; width: 26px; height: 26px;
+  background: var(--surface); color: var(--fg); cursor: pointer; font-size: 15px; line-height: 1;
+}
+.thumb .tag { position: absolute; bottom: 0; inset-inline: 0; font-size: 12px; background: var(--accent); color: var(--surface); text-align: center; }
+
+.consent { display: flex; gap: 10px; align-items: flex-start; }
+.consent input { width: 20px; height: 20px; margin-top: 3px; flex: none; accent-color: var(--accent); }
+
+pre.summary {
+  white-space: pre-wrap; word-break: break-word; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px; font-family: var(--body); font-size: 15px; margin: 0; max-height: 420px; overflow: auto;
+}
+.steps { margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 4px; }
+.toast { color: var(--accent); font-weight: 600; font-size: 15px; }
+.warnbox { border-inline-start: 4px solid var(--danger); padding: 8px 12px; background: var(--bg); border-radius: 6px; font-size: 15px; }
+footer { color: var(--muted); font-size: 14px; text-align: center; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap" dir="rtl" lang="he">
+  <header class="hero">
+    <div class="brandrow"><span class="moshav-logo"><img src="data:image/jpeg;base64,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" alt="לוגו מושב שדה אליעזר"></span><div class="eyebrow">קהילת מושב שדה אליעזר</div></div>
+    <h1>הרשמה למאגר ״זה העסק שלנו״</h1>
+    <p class="lede"><strong>תושב או תושבת שדה אליעזר?</strong> יש לך עסק, מקצוע או שירות? או תחביב, כישרון וידע שתשמח/י לחלוק עם קהילת התושבים, אולי גם בהתנדבות? מלא/י את הטופס והפרטים שלך יופיעו בדף <a href="https://claude.ai/artifact/JuQEicjvWCL6UwLZsBqzYf" target="_blank" rel="noopener">״זה העסק שלנו - קהילת שדה אליעזר״</a>. המילוי לוקח כ־5 דקות. שדות עם כוכבית הם חובה.</p>
+    <div class="furrows" aria-hidden="true"></div>
+  </header>
+
+  <nav class="progress" id="progress" aria-label="חלקי השאלון">
+    <a href="#s1" data-sec="s1">פרטים אישיים</a>
+    <a href="#s2" data-sec="s2">התקשרות</a>
+    <a href="#s3" data-sec="s3" class="biz-only">העסק</a>
+    <a href="#s4" data-sec="s4" class="biz-only">שירותים ומחירים</a>
+    <a href="#s3e" data-sec="s3e" class="exp-only" hidden>המומחיות שלי</a>
+    <a href="#s5" data-sec="s5">תמונות</a>
+    <a href="#s6" data-sec="s6">אישורים ושליחה</a>
+  </nav>
+
+  <form id="form" novalidate>
+    <div class="wrap">
+
+    <!-- 0: registration type -->
+    <section class="card" id="s0">
+      <h2>איך תרצו להופיע במאגר?</h2>
+      <div class="kinds" role="radiogroup" aria-label="סוג רישום">
+        <label class="kind"><input type="radio" name="regType" value="biz" checked>
+          <span><b>בעל/ת עסק או מקצוע</b><small>אני מציע/ה שירות או מוצר בתשלום, כעבודה או כעסק</small></span></label>
+        <label class="kind"><input type="radio" name="regType" value="expert">
+          <span><b>איש/אשת מומחיות</b><small>יש לי תחביב, כישרון או ידע (אומנות, ריתוך, מחשבים…) ואשמח לעזור, לייעץ או להתנדב</small></span></label>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section class="card" id="s1">
+      <div class="sec-head"><span class="sec-num">1</span><h2>פרטים מזהים</h2></div>
+      <div class="grid">
+        <div class="field"><label class="req" for="firstName">שם פרטי</label><input type="text" id="firstName" name="firstName" required autocomplete="given-name"><span class="err">נא למלא שם פרטי</span></div>
+        <div class="field"><label class="req" for="lastName">שם משפחה</label><input type="text" id="lastName" name="lastName" required autocomplete="family-name"><span class="err">נא למלא שם משפחה</span></div>
+        <div class="field"><label for="farmNo">מספר משק / בית</label><input type="text" id="farmNo" name="farmNo" placeholder="לדוגמה: משק 42 או הרחבה, בית 17"></div>
+        <div class="field"><label for="address">כתובת ברחוב (אם יש)</label><input type="text" id="address" name="address" autocomplete="street-address"></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="card" id="s2">
+      <div class="sec-head"><span class="sec-num">2</span><h2>פרטי התקשרות</h2></div>
+      <div class="grid">
+        <div class="field"><label class="req" for="phone">טלפון נייד</label><input type="tel" id="phone" name="phone" required inputmode="tel" placeholder="050-0000000" autocomplete="tel"><span class="err">נא למלא מספר טלפון תקין</span></div>
+        <div class="field"><label for="phone2">טלפון נוסף / טלפון העסק</label><input type="tel" id="phone2" name="phone2" inputmode="tel"></div>
+        <div class="field full"><label for="email">דוא״ל</label><input type="email" id="email" name="email" autocomplete="email"><span class="err">כתובת הדוא״ל לא תקינה</span></div>
+        <div class="field full"><span class="label">דרך התקשרות מועדפת</span>
+          <div class="chips" role="group" aria-label="דרך התקשרות מועדפת">
+            <label class="chip"><input type="checkbox" name="contactPref" value="שיחת טלפון"><span>שיחת טלפון</span></label>
+            <label class="chip"><input type="checkbox" name="contactPref" value="וואטסאפ"><span>וואטסאפ</span></label>
+            <label class="chip"><input type="checkbox" name="contactPref" value="SMS"><span>SMS</span></label>
+            <label class="chip"><input type="checkbox" name="contactPref" value="דוא״ל"><span>דוא״ל</span></label>
+          </div></div>
+        <div class="field"><label for="website">אתר אינטרנט</label><input type="url" id="website" name="website" placeholder="https://"></div>
+        <div class="field"><label for="social">פייסבוק / אינסטגרם</label><input type="text" id="social" name="social" placeholder="קישור או שם משתמש"></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="card biz-only" id="s3">
+      <div class="sec-head"><span class="sec-num">3</span><h2>העסק והמקצוע</h2></div>
+      <div class="grid">
+        <div class="field"><label class="req" for="bizName">שם העסק</label><input type="text" id="bizName" name="bizName" required placeholder="אם אין שם לעסק, כתבו את שמכם"><span class="err">נא למלא שם עסק</span></div>
+        <div class="field"><label class="req" for="profession">מקצוע / תפקיד</label><input type="text" id="profession" name="profession" required placeholder="לדוגמה: חשמלאי מוסמך, קוסמטיקאית"><span class="err">נא למלא מקצוע</span></div>
+        <div class="field full"><span class="label req">תחומים</span><span class="hint">אפשר לבחור כמה תחומים</span>
+          <div class="chips cat-group" id="category" role="group" aria-label="תחומי העסק">
+            <label class="chip"><input type="checkbox" name="category" value="קולינריה ומוצרי חקלאות"><span>קולינריה ומוצרי חקלאות</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="חינוך ושיעורים פרטיים"><span>חינוך ושיעורים פרטיים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="מוסיקה"><span>מוסיקה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="ביוטי וטיפוח"><span>ביוטי וטיפוח</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="בייביסיטר וטיפול בילדים"><span>בייביסיטר וטיפול בילדים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="בנייה"><span>בנייה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="שיפוצים ותחזוקת בית"><span>שיפוצים ותחזוקת בית</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="חשמל, אינסטלציה ומיזוג"><span>חשמל, אינסטלציה ומיזוג</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אדריכלות ועיצוב פנים"><span>אדריכלות ועיצוב פנים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="טכנולוגיה ומחשבים"><span>טכנולוגיה ומחשבים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="שיווק ופרסום"><span>שיווק ופרסום</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אומנות ומלאכת יד"><span>אומנות ומלאכת יד</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="צילום ואירועים"><span>צילום ואירועים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="רפואי ואלטרנטיבי"><span>רפואי ואלטרנטיבי</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="טיפול רגשי ואימון אישי"><span>טיפול רגשי ואימון אישי</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אירוח ולינה"><span>אירוח ולינה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="כושר וספורט"><span>כושר וספורט</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="גינון, חקלאות ובעלי חיים"><span>גינון, חקלאות ובעלי חיים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="רכב ותחבורה"><span>רכב ותחבורה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="ניקיון ושירותי בית"><span>ניקיון ושירותי בית</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="ייעוץ, משפטים, ביטוח והנהלת חשבונות"><span>ייעוץ, משפטים, ביטוח והנהלת חשבונות</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אחר"><span>אחר</span></label>
+          </div><span class="err">נא לבחור לפחות תחום אחד</span></div>
+        <div class="field full" id="categoryOtherWrap" hidden><label for="categoryOther">פרטו את התחום</label><input type="text" id="categoryOther" name="categoryOther"></div>
+        <div class="field full"><label class="req" for="description">תיאור קצר של העסק</label>
+          <textarea id="description" name="description" required maxlength="500" placeholder="2–3 משפטים שיופיעו במאגר: מה אתם עושים, למי זה מתאים, מה מייחד אתכם"></textarea>
+          <span class="hint" id="descCount">0 / 500 תווים</span><span class="err">נא לכתוב תיאור קצר</span></div>
+        <div class="field"><label for="years">שנות ניסיון</label><input type="number" id="years" name="years" min="0" max="70" inputmode="numeric"></div>
+        <div class="field"><label for="license">רישיון / הסמכה / תעודה</label><input type="text" id="license" name="license" placeholder="לדוגמה: רישיון חשמלאי ראשי"></div>
+        <div class="field full"><span class="label">איפה העסק פועל?</span>
+          <div class="chips" role="group" aria-label="מיקום פעילות">
+            <label class="chip"><input type="checkbox" name="location" value="מהבית / מהמשק במושב"><span>מהבית / מהמשק במושב</span></label>
+            <label class="chip"><input type="checkbox" name="location" value="מגיע/ה ללקוח"><span>מגיע/ה ללקוח</span></label>
+            <label class="chip"><input type="checkbox" name="location" value="מקום עסק מחוץ למושב"><span>מקום עסק מחוץ למושב</span></label>
+            <label class="chip"><input type="checkbox" name="location" value="אונליין"><span>אונליין</span></label>
+          </div></div>
+        <div class="field full"><span class="label">אזור שירות</span>
+          <div class="chips" role="group" aria-label="אזור שירות">
+            <label class="chip"><input type="checkbox" name="area" value="שדה אליעזר בלבד"><span>שדה אליעזר בלבד</span></label>
+            <label class="chip"><input type="checkbox" name="area" value="עמק החולה וגליל עליון"><span>עמק החולה וגליל עליון</span></label>
+            <label class="chip"><input type="checkbox" name="area" value="כל הצפון"><span>כל הצפון</span></label>
+            <label class="chip"><input type="checkbox" name="area" value="כל הארץ"><span>כל הארץ</span></label>
+          </div></div>
+        <div class="field"><label for="bizAddress">כתובת בית העסק</label><input type="text" id="bizAddress" name="bizAddress" autocomplete="off" placeholder="רחוב ומספר, או מספר משק"><span class="hint">אם העסק פועל מהבית ולא תרצו לפרסם כתובת, השאירו ריק</span></div>
+        <div class="field"><label for="bizCity">יישוב</label><input type="text" id="bizCity" name="bizCity" placeholder="לדוגמה: שדה אליעזר, ראש פינה"></div>
+        <div class="field full"><label for="hours">ימים ושעות פעילות</label><input type="text" id="hours" name="hours" placeholder="לדוגמה: א׳–ה׳ 08:00–17:00, ו׳ עד 13:00"></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="card biz-only" id="s4">
+      <div class="sec-head"><span class="sec-num">4</span><h2>שירותים ומחירים</h2></div>
+      <p class="sec-note">הוסיפו את השירותים העיקריים. מחיר אינו חובה: אפשר להשאיר ריק או לבחור ״לפי הצעת מחיר״.</p>
+      <div class="services" id="services"></div>
+      <div class="row"><button type="button" class="btn" id="addSvc">+ הוספת שירות</button></div>
+      <div class="grid">
+        <div class="field full"><span class="label">איך להציג מחירים במאגר?</span>
+          <div class="chips" role="radiogroup" aria-label="הצגת מחירים">
+            <label class="chip"><input type="radio" name="pricePolicy" value="להציג את המחירים שציינתי" checked><span>להציג את המחירים שציינתי</span></label>
+            <label class="chip"><input type="radio" name="pricePolicy" value="לא להציג מחירים, רק ״לפי הצעת מחיר״"><span>לא להציג, רק ״לפי הצעת מחיר״</span></label>
+          </div></div>
+        <div class="field full"><span class="label">הטבה לתושבי המושב?</span>
+          <div class="chips" role="radiogroup" aria-label="הטבה לתושבים">
+            <label class="chip"><input type="radio" name="discount" value="כן"><span>כן</span></label>
+            <label class="chip"><input type="radio" name="discount" value="לא" checked><span>לא</span></label>
+          </div></div>
+        <div class="field full" id="discountWrap" hidden><label for="discountText">פרטי ההטבה</label><input type="text" id="discountText" name="discountText" placeholder="לדוגמה: 10% הנחה לתושבי שדה אליעזר"></div>
+      </div>
+    </section>
+
+    <!-- 3e: expertise -->
+    <section class="card exp-only" id="s3e" hidden>
+      <div class="sec-head"><span class="sec-num">3</span><h2>המומחיות שלי</h2></div>
+      <p class="sec-note">לא צריך להיות מקצוען. מספיק שיש לך ידע, ניסיון או כישרון שיכול לעזור לשכנים.</p>
+      <div class="grid">
+        <div class="field full"><label class="req" for="expTitle">במה אני טוב/ה?</label><input type="text" id="expTitle" name="expTitle" required placeholder="לדוגמה: ריתוך ועבודות מתכת, ציור בצבעי מים, תיקון מחשבים"><span class="err">נא לכתוב במה את/ה טוב/ה</span></div>
+        <div class="field full"><span class="label req">תחומים</span><span class="hint">אפשר לבחור כמה תחומים</span>
+          <div class="chips cat-group" id="expCategory" role="group" aria-label="תחומי המומחיות">
+            <label class="chip"><input type="checkbox" name="expCategory" value="אומנות: ציור ורישום"><span>אומנות: ציור ורישום</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="אומנות: קרמיקה ופיסול"><span>אומנות: קרמיקה ופיסול</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="אומנות: צילום ווידאו"><span>אומנות: צילום ווידאו</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="מוזיקה, נגינה ושירה"><span>מוזיקה, נגינה ושירה</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="מלאכת יד: סריגה, תפירה ורקמה"><span>מלאכת יד: סריגה, תפירה ורקמה</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="ריתוך ועבודות מתכת"><span>ריתוך ועבודות מתכת</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="נגרות ועבודות עץ"><span>נגרות ועבודות עץ</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="תיקונים קטנים בבית"><span>תיקונים קטנים בבית</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="מחשבים, טלפונים וטכנולוגיה"><span>מחשבים, טלפונים וטכנולוגיה</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="תיקון מכשירי חשמל, אופניים וכלים"><span>תיקון מכשירי חשמל, אופניים וכלים</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="גינון, צמחים וחקלאות"><span>גינון, צמחים וחקלאות</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="בישול ואפייה"><span>בישול ואפייה</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="שפות ותרגום"><span>שפות ותרגום</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="כתיבה, עריכה וניסוח מכתבים"><span>כתיבה, עריכה וניסוח מכתבים</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="ניירת, בירוקרטיה וזכויות"><span>ניירת, בירוקרטיה וזכויות</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="ספורט, כושר ותנועה"><span>ספורט, כושר ותנועה</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="עזרה ראשונה ובריאות"><span>עזרה ראשונה ובריאות</span></label>
+            <label class="chip"><input type="checkbox" name="expCategory" value="אחר"><span>אחר</span></label>
+          </div><span class="err">נא לבחור לפחות תחום אחד</span></div>
+        <div class="field full" id="expCategoryOtherWrap" hidden><label for="expCategoryOther">פרטו את התחום</label><input type="text" id="expCategoryOther" name="expCategoryOther"></div>
+        <div class="field full"><label class="req" for="expDescription">ספרו קצת</label>
+          <textarea id="expDescription" name="expDescription" required maxlength="500" placeholder="מה אתם יודעים לעשות, איך הגעתם לזה, ובמה תוכלו לעזור"></textarea>
+          <span class="err">נא לכתוב כמה מילים</span></div>
+        <div class="field full"><span class="label">רמת הניסיון שלי</span>
+          <div class="chips" role="radiogroup" aria-label="רמת ניסיון">
+            <label class="chip"><input type="radio" name="expLevel" value="חובב/ת נלהב/ת"><span>חובב/ת נלהב/ת</span></label>
+            <label class="chip"><input type="radio" name="expLevel" value="חובב/ת מנוסה" checked><span>חובב/ת מנוסה</span></label>
+            <label class="chip"><input type="radio" name="expLevel" value="ברמה מקצועית (לא כעבודה)"><span>ברמה מקצועית (לא כעבודה)</span></label>
+          </div></div>
+        <div class="field full"><span class="label">במה אשמח לעזור?</span>
+          <div class="chips" role="group" aria-label="סוגי עזרה">
+            <label class="chip"><input type="checkbox" name="expOffer" value="עצה או טיפ בטלפון"><span>עצה או טיפ בטלפון</span></label>
+            <label class="chip"><input type="checkbox" name="expOffer" value="עזרה בהתנדבות לשכנים"><span>עזרה בהתנדבות לשכנים</span></label>
+            <label class="chip"><input type="checkbox" name="expOffer" value="ללמד או להעביר סדנה"><span>ללמד או להעביר סדנה</span></label>
+            <label class="chip"><input type="checkbox" name="expOffer" value="פרויקטים קהילתיים במושב"><span>פרויקטים קהילתיים במושב</span></label>
+            <label class="chip"><input type="checkbox" name="expOffer" value="עזרה תמורת תשלום סמלי או החזר הוצאות"><span>תמורת תשלום סמלי / החזר הוצאות</span></label>
+          </div></div>
+        <div class="field"><label for="expAvailability">מתי אני זמין/ה?</label><input type="text" id="expAvailability" name="expAvailability" placeholder="לדוגמה: ערבים וסופי שבוע, כמה שעות בחודש"></div>
+        <div class="field"><label for="expTools">ציוד או כלים שיש לי</label><input type="text" id="expTools" name="expTools" placeholder="לדוגמה: מכונת ריתוך ניידת, תנור קרמיקה"></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="card" id="s5">
+      <div class="sec-head"><span class="sec-num">5</span><h2>תמונות (לא חובה)</h2></div>
+      <p class="sec-note">לוגו, תמונה שלכם, תמונות של עבודות או יצירות. עד 6 תמונות. התמונות נשארות במכשיר שלכם; בשלב השליחה תצרפו אותן למייל.</p>
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="בחירת תמונות">
+        <strong>לחצו לבחירת תמונות</strong> או גררו אותן לכאן
+        <input type="file" id="photos" accept="image/*" multiple hidden>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+      <span class="hint" id="photoHint">לא נבחרו תמונות</span>
+    </section>
+
+    <!-- 6 -->
+    <section class="card" id="s6">
+      <div class="sec-head"><span class="sec-num">6</span><h2>אישורים ושליחה</h2></div>
+      <div class="field"><span class="label">אילו פרטים מותר לפרסם במאגר?</span>
+        <div class="chips" role="group" aria-label="פרטים לפרסום">
+          <label class="chip"><input type="checkbox" name="publish" value="שם מלא" checked><span>שם מלא</span></label>
+          <label class="chip"><input type="checkbox" name="publish" value="טלפון" checked><span>טלפון</span></label>
+          <label class="chip"><input type="checkbox" name="publish" value="דוא״ל"><span>דוא״ל</span></label>
+          <label class="chip"><input type="checkbox" name="publish" value="מספר משק / כתובת"><span>מספר משק / כתובת</span></label>
+          <label class="chip"><input type="checkbox" name="publish" value="אתר ורשתות"><span>אתר ורשתות</span></label>
+          <label class="chip"><input type="checkbox" name="publish" value="תמונות" checked><span>תמונות</span></label>
+        </div></div>
+      <div class="field" id="consentField">
+        <label class="consent"><input type="checkbox" id="consent" name="consent" required>
+          <span class="req">אני מאשר/ת שהפרטים נכונים ומסכים/ה לפרסומם במאגר העסקים של שדה אליעזר, בהתאם לבחירה למעלה. ידוע לי שאפשר לבקש עדכון או הסרה בכל עת.</span></label>
+        <span class="err">יש לאשר כדי לשלוח</span></div>
+      <label class="consent"><input type="checkbox" id="updates" name="updates">
+        <span>אשמח לקבל עדכונים על פעילויות לעסקי המושב (מפגשים, ירידים, שיתופי פעולה)</span></label>
+      <div class="field"><label for="notes">הערות נוספות</label><textarea id="notes" name="notes" style="min-height:70px"></textarea></div>
+      <div class="row"><button type="submit" class="btn primary">יצירת סיכום לשליחה</button><span class="toast" id="draftNote" aria-live="polite"></span></div>
+    </section>
+
+    <section class="card" id="result" hidden>
+      <div class="sec-head"><span class="sec-num">✓</span><h2>הסיכום מוכן</h2></div>
+      <ol class="steps">
+        <li>לחצו ״שליחה במייל״ (או ״שליחה דרך Gmail״). ייפתח מייל מוכן עם כל הפרטים.</li>
+        <li id="stepTarget">שלחו אותו לרכזת המאגר: <span class="ltr-mail" id="coordMail"></span></li>
+        <li id="stepPhotos" hidden>צרפו למייל את התמונות שבחרתם.</li>
+      </ol>
+      <div class="row">
+        <a class="btn wheat" id="mailLink" href="#">שליחה במייל</a>
+        <a class="btn" id="gmailLink" href="#" target="_blank" rel="noopener">שליחה דרך Gmail</a>
+        <button type="button" class="btn" id="copyBtn">העתקת הסיכום</button>
+        <button type="button" class="btn ghost" id="editBtn">חזרה לעריכה</button>
+        <span class="toast" id="copyNote" aria-live="polite"></span>
+      </div>
+      <p class="hint" style="margin:0">אם הכפתורים לא פותחים מייל, העתיקו את הסיכום ושלחו אותו מכל תיבת דואר לכתובת שלמעלה. אחרי אישור, העסק יופיע בדף <a href="https://claude.ai/artifact/JuQEicjvWCL6UwLZsBqzYf" target="_blank" rel="noopener">״זה העסק שלנו״</a>.</p>
+      <pre class="summary" id="summary" tabindex="0"></pre>
+    </section>
+
+    </div>
+  </form>
+
+  <footer>מאגר העסקים של שדה אליעזר · לשאלות פנו לרכז/ת המאגר</footer>
+</div>
+
+<script>
+(() => {
+  // Registration summaries are emailed to the registry coordinator.
+  const COORDINATOR_EMAIL = "gilagur@gmail.com";
+  const DRAFT_KEY = "se-biz-draft-v2";
+  const form = document.getElementById("form");
+  const $ = id => document.getElementById(id);
+
+  // ---------- services rows ----------
+  let svcSeq = 0;
+  function addService(v = {}) {
+    const i = ++svcSeq;
+    const row = document.createElement("div");
+    row.className = "svc";
+    row.innerHTML = `
+      <div class="field svc-name"><label for="svcName${i}">שירות</label><input type="text" id="svcName${i}" class="s-name" placeholder="לדוגמה: התקנת מזגן"></div>
+      <div class="field"><label for="svcPrice${i}">מחיר ₪</label><input type="text" id="svcPrice${i}" class="s-price" inputmode="decimal" placeholder="350"></div>
+      <div class="field"><label for="svcUnit${i}">אופן תמחור</label>
+        <select id="svcUnit${i}" class="s-unit">
+          <option>לעבודה</option><option>לשעה</option><option>לביקור</option><option>למ״ר</option>
+          <option>ליחידה</option><option>לחודש</option><option>החל מ־</option><option>לפי הצעת מחיר</option>
+        </select></div>
+      <button type="button" class="btn ghost" aria-label="הסרת השירות">הסרה</button>`;
+    row.querySelector(".s-name").value = v.name || "";
+    row.querySelector(".s-price").value = v.price || "";
+    if (v.unit) row.querySelector(".s-unit").value = v.unit;
+    row.querySelector("button").onclick = () => { row.remove(); if (!$("services").children.length) addService(); saveDraft(); };
+    $("services").appendChild(row);
+  }
+  $("addSvc").onclick = () => { addService(); $("services").lastElementChild.querySelector("input").focus(); };
+
+  const services = () => [...$("services").children].map(r => ({
+    name: r.querySelector(".s-name").value.trim(),
+    price: r.querySelector(".s-price").value.trim(),
+    unit: r.querySelector(".s-unit").value
+  })).filter(s => s.name);
+
+  // ---------- conditional fields ----------
+  const syncConditional = () => {
+    const expert = form.regType.value === "expert";
+    document.querySelectorAll(".biz-only").forEach(el => { el.hidden = expert; });
+    document.querySelectorAll(".exp-only").forEach(el => { el.hidden = !expert; });
+    let n = 0;
+    document.querySelectorAll("section.card .sec-num").forEach(el => { const s = el.closest("section"); if (!s.hidden && s.id !== "result") el.textContent = ++n; });
+    $("expCategoryOtherWrap").hidden = !form.querySelector('input[name="expCategory"][value="אחר"]').checked;
+    $("categoryOtherWrap").hidden = !form.querySelector('input[name="category"][value="אחר"]').checked;
+    $("discountWrap").hidden = form.discount.value !== "כן";
+    $("descCount").textContent = `${$("description").value.length} / 500 תווים`;
+  };
+
+  // ---------- photos ----------
+  let photos = []; // {file, url}
+  const MAX_PHOTOS = 6;
+  function addFiles(list) {
+    for (const f of list) {
+      if (!f.type.startsWith("image/")) continue;
+      if (photos.length >= MAX_PHOTOS) break;
+      photos.push({ file: f, url: URL.createObjectURL(f) });
+    }
+    renderThumbs();
+  }
+  function renderThumbs() {
+    const t = $("thumbs"); t.innerHTML = "";
+    photos.forEach((p, i) => {
+      const d = document.createElement("div"); d.className = "thumb";
+      const img = document.createElement("img"); img.src = p.url; img.alt = p.file.name;
+      const b = document.createElement("button"); b.type = "button"; b.textContent = "×"; b.setAttribute("aria-label", "הסרת התמונה " + p.file.name);
+      b.onclick = () => { URL.revokeObjectURL(p.url); photos.splice(i, 1); renderThumbs(); };
+      d.append(img, b);
+      if (i === 0) { const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = "תמונה ראשית"; d.append(tag); }
+      t.append(d);
+    });
+    $("photoHint").textContent = photos.length ? `נבחרו ${photos.length} מתוך ${MAX_PHOTOS} תמונות. הראשונה תוצג כתמונה הראשית.` : "לא נבחרו תמונות";
+  }
+  const drop = $("drop"), picker = $("photos");
+  drop.onclick = () => picker.click();
+  drop.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); picker.click(); } };
+  picker.onchange = () => { addFiles(picker.files); picker.value = ""; };
+  drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+  drop.ondragleave = () => drop.classList.remove("over");
+  drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); };
+
+  // ---------- draft (this browser only) ----------
+  function collect() {
+    const fd = new FormData(form), o = {};
+    for (const [k, v] of fd.entries()) { if (o[k] !== undefined) o[k] = [].concat(o[k], v); else o[k] = v; }
+    ["contactPref", "location", "area", "publish", "expOffer", "category", "expCategory"].forEach(k => { o[k] = fd.getAll(k); });
+    o.consent = $("consent").checked; o.updates = $("updates").checked;
+    o.services = services();
+    return o;
+  }
+  let saveTimer;
+  function saveDraft() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(collect())); $("draftNote").textContent = "הטיוטה נשמרה בדפדפן הזה"; } catch (e) {}
+    }, 600);
+  }
+  function loadDraft() {
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (e) {}
+    if (!d) { addService(); return; }
+    for (const el of form.elements) {
+      if (!el.name || el.closest(".svc")) continue;
+      const v = d[el.name];
+      if (el.type === "checkbox") el.checked = Array.isArray(v) ? v.includes(el.value) : !!v;
+      else if (el.type === "radio") el.checked = v === el.value;
+      else if (v !== undefined && el.type !== "file") el.value = v;
+    }
+    (d.services && d.services.length ? d.services : [{}]).forEach(addService);
+  }
+  form.addEventListener("input", () => { syncConditional(); saveDraft(); updateProgress(); });
+  form.addEventListener("change", () => { syncConditional(); saveDraft(); updateProgress(); });
+
+  // ---------- progress ----------
+  function sectionDone(id) {
+    const req = [...$(id).querySelectorAll("[required]")];
+    if (id === "s4") return services().length > 0;
+    if (id === "s5") return photos.length > 0;
+    const grp = $(id).querySelector(".cat-group");
+    if (grp && !grp.querySelector("input:checked")) return false;
+    return req.length ? req.every(el => el.type === "checkbox" ? el.checked : el.value.trim()) : false;
+  }
+  function updateProgress() {
+    document.querySelectorAll("#progress a").forEach(a => a.classList.toggle("done", sectionDone(a.dataset.sec)));
+  }
+
+  // ---------- validation ----------
+  const phoneOk = v => v.replace(/[^\d]/g, "").length >= 9;
+  function validate() {
+    let first = null;
+    form.querySelectorAll(".field").forEach(f => f.classList.remove("invalid"));
+    const bad = el => { const f = el.closest(".field"); f && f.classList.add("invalid"); first = first || el; };
+    form.querySelectorAll("[required]").forEach(el => {
+      if (el.closest("[hidden]")) return;
+      const empty = el.type === "checkbox" ? !el.checked : !el.value.trim();
+      if (empty) bad(el);
+    });
+    form.querySelectorAll(".cat-group").forEach(g => {
+      if (!g.closest("[hidden]") && !g.querySelector("input:checked")) bad(g.querySelector("input"));
+    });
+    if ($("phone").value.trim() && !phoneOk($("phone").value)) bad($("phone"));
+    const em = $("email").value.trim();
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) bad($("email"));
+    if (first) first.focus();
+    return !first;
+  }
+
+  // ---------- summary ----------
+  // categories contain commas, so they're joined with " | " (the landing page splits on it)
+  const catList = (arr, other) => arr.map(c => c === "אחר" && other ? `אחר: ${other}` : c).join(" | ");
+  function buildSummary() {
+    const d = collect(), L = [];
+    const line = (k, v) => { if (v && (!Array.isArray(v) || v.length)) L.push(`${k}: ${Array.isArray(v) ? v.join(", ") : v}`); };
+    const expert = d.regType === "expert";
+    L.push(expert ? "📋 בקשת הרשמה למאגר – איש/אשת מומחיות – שדה אליעזר" : "📋 בקשת הרשמה למאגר העסקים – שדה אליעזר", "");
+    L.push(`סוג רישום: ${expert ? "איש/אשת מומחיות" : "בעל/ת עסק"}`, "");
+    L.push("— פרטים מזהים —");
+    line("שם", `${d.firstName} ${d.lastName}`); line("משק / בית", d.farmNo); line("כתובת", d.address);
+    L.push("", "— התקשרות —");
+    line("נייד", d.phone); line("טלפון נוסף", d.phone2); line("דוא״ל", d.email); line("התקשרות מועדפת", d.contactPref); line("אתר", d.website); line("רשתות", d.social);
+    if (expert) {
+      L.push("", "— המומחיות —");
+      line("מומחיות", d.expTitle);
+      line("תחומים", catList(d.expCategory, d.expCategoryOther));
+      line("תיאור", d.expDescription); line("רמת ניסיון", d.expLevel); line("אשמח לעזור ב", d.expOffer);
+      line("זמינות", d.expAvailability); line("ציוד", d.expTools);
+    } else {
+    L.push("", "— העסק —");
+    line("שם העסק", d.bizName); line("מקצוע", d.profession);
+    line("תחומים", catList(d.category, d.categoryOther));
+    line("תיאור", d.description); line("שנות ניסיון", d.years); line("רישיון / הסמכה", d.license);
+    line("כתובת העסק", [d.bizAddress, d.bizCity].filter(Boolean).join(", "));
+    line("מיקום פעילות", d.location); line("אזור שירות", d.area); line("שעות פעילות", d.hours);
+    L.push("", "— שירותים ומחירים —");
+    if (d.services.length) d.services.forEach(s => {
+      const price = s.unit === "לפי הצעת מחיר" || !s.price ? "לפי הצעת מחיר" : (s.unit === "החל מ־" ? `החל מ־${s.price} ₪` : `${s.price} ₪ ${s.unit}`);
+      L.push(`• ${s.name} – ${price}`);
+    }); else L.push("לא צוינו שירותים");
+    line("הצגת מחירים", d.pricePolicy);
+    line("הטבה לתושבים", d.discount === "כן" ? (d.discountText || "כן") : "לא");
+    }
+    L.push("", "— תמונות —");
+    L.push(photos.length ? `${photos.length} תמונות יצורפו למייל (${photos.map(p => p.file.name).join(", ")})` : "ללא תמונות");
+    L.push("", "— אישורים —");
+    line("מותר לפרסם", d.publish.length ? d.publish : ["רק שם העסק והתיאור"]);
+    L.push("הסכמה לפרסום: כן");
+    L.push(`עדכונים לעסקי המושב: ${d.updates ? "כן" : "לא"}`);
+    line("הערות", d.notes);
+    L.push("", `נשלח בתאריך ${new Date().toLocaleDateString("he-IL")}`);
+    return L.join("\n");
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!validate()) return;
+    const text = buildSummary();
+    $("summary").textContent = text;
+    const d = collect();
+    const who = (d.regType === "expert" ? d.expTitle : d.bizName) || `${d.firstName || ""} ${d.lastName || ""}`.trim();
+    const subject = `הרשמה למאגר ״זה העסק שלנו״${who ? " – " + who : ""}`;
+    $("mailLink").href = `mailto:${COORDINATOR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    $("gmailLink").href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(COORDINATOR_EMAIL)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    $("coordMail").textContent = COORDINATOR_EMAIL;
+    $("stepPhotos").hidden = !photos.length;
+    $("result").hidden = false;
+    $("result").scrollIntoView({ block: "start" });
+  });
+  $("editBtn").onclick = () => { $("s1").scrollIntoView({ block: "start" }); };
+  $("copyBtn").onclick = () => {
+    const text = $("summary").textContent;
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($("summary")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("copyNote").textContent = "הטקסט סומן – העתיקו אותו ידנית (Ctrl+C)"; };
+    try {
+      navigator.clipboard.writeText(text).then(() => { $("copyNote").textContent = "הסיכום הועתק"; }, fallback);
+    } catch (e) { fallback(); }
+  };
+
+  loadDraft(); syncConditional(); updateProgress();
+})();
+</script>

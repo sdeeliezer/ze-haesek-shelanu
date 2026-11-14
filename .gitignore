@@ -1,0 +1,25 @@
+# Secrets and keys: never commit
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.*
+
+# Backups: contain contact details of real businesses (phones, emails)
+גיבוי*
+*backup*
+*.bak
+
+# Source material from third parties (flyers, etc.)
+צח - סולארי.jpeg
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+node_modules/
