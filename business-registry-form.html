@@ -100,8 +100,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 }
 .chip input:checked + span { background: var(--accent); color: var(--surface); border-color: var(--accent); }
 
-.kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 560px) { .kinds { grid-template-columns: 1fr; } }
+.kinds { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 760px) { .kinds { grid-template-columns: 1fr; } }
 .kind { position: relative; cursor: pointer; }
 .kind input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .kind span { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 14px 16px; border: 2px solid var(--line); border-radius: 12px; background: var(--bg); }
@@ -175,6 +175,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
     <a href="#s3" data-sec="s3" class="biz-only">העסק</a>
     <a href="#s4" data-sec="s4" class="biz-only">שירותים ומחירים</a>
     <a href="#s3e" data-sec="s3e" class="exp-only" hidden>המומחיות שלי</a>
+    <a href="#s3i" data-sec="s3i" class="inst-only" hidden>המוסד</a>
     <a href="#s5" data-sec="s5">תמונות</a>
     <a href="#s6" data-sec="s6">אישורים ושליחה</a>
   </nav>
@@ -190,6 +191,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
           <span><b>בעל/ת עסק או מקצוע</b><small>אני מציע/ה שירות או מוצר בתשלום, כעבודה או כעסק</small></span></label>
         <label class="kind"><input type="radio" name="regType" value="expert">
           <span><b>איש/אשת מומחיות</b><small>יש לי תחביב, כישרון או ידע (אומנות, ריתוך, מחשבים…) ואשמח לעזור, לייעץ או להתנדב</small></span></label>
+        <label class="kind"><input type="radio" name="regType" value="inst">
+          <span><b>מוסד קהילה</b><small>אני אחראי/ת על בית כנסת, מקווה, גן, ספרייה, מועדון או מכולת, ורוצה לפרסם שעות פתיחה ופעילויות</small></span></label>
       </div>
     </section>
 
@@ -359,6 +362,33 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
       </div>
     </section>
 
+    <!-- 3i: community institution -->
+    <section class="card inst-only" id="s3i" hidden>
+      <div class="sec-head"><span class="sec-num">3</span><h2>מוסד הקהילה</h2></div>
+      <p class="sec-note">הפרטים יופיעו בלשונית ״מוסדות קהילה״ באתר. בפרטים האישיים ובפרטי ההתקשרות למעלה מלאו את איש או אשת הקשר של המוסד.</p>
+      <div class="grid">
+        <div class="field full"><label class="req" for="instName">שם המוסד</label><input type="text" id="instName" name="instName" required placeholder="לדוגמה: בית הכנסת המרכזי, גן ״חמניות״, ספריית המושב"><span class="err">נא למלא את שם המוסד</span></div>
+        <div class="field full"><span class="label req">סוג המוסד</span>
+          <div class="chips cat-group" id="instType" role="group" aria-label="סוג המוסד">
+            <label class="chip"><input type="checkbox" name="instType" value="מכולת"><span>מכולת</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="בית כנסת"><span>בית כנסת</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="מקווה"><span>מקווה</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="גן ילדים"><span>גן ילדים</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="פעוטון"><span>פעוטון</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="ספרייה"><span>ספרייה</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="מועדון גיל שלישי"><span>מועדון גיל שלישי</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="בית ילדים"><span>בית ילדים</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="מועדון נוער"><span>מועדון נוער</span></label>
+            <label class="chip"><input type="checkbox" name="instType" value="אחר"><span>אחר</span></label>
+          </div><span class="err">נא לבחור את סוג המוסד</span></div>
+        <div class="field full" id="instTypeOtherWrap" hidden><label for="instTypeOther">פרטו את סוג המוסד</label><input type="text" id="instTypeOther" name="instTypeOther"></div>
+        <div class="field full"><label for="instAbout">על המקום</label><textarea id="instAbout" name="instAbout" maxlength="500" placeholder="כמה מילים על המוסד: למי הוא מיועד, מה אפשר למצוא בו"></textarea></div>
+        <div class="field full"><label class="req" for="instHours">שעות פתיחה / זמני תפילות</label><textarea id="instHours" name="instHours" required placeholder="שורה לכל יום או זמן, לדוגמה:&#10;א׳–ה׳ 07:30–13:00&#10;שישי 08:00–12:00"></textarea><span class="err">נא למלא שעות פתיחה</span></div>
+        <div class="field full"><label for="instActivities">פעילויות</label><textarea id="instActivities" name="instActivities" placeholder="שורה לכל פעילות, לדוגמה:&#10;שעת סיפור, יום ב׳ 17:00&#10;שיעור תורה, יום ג׳ 20:00"></textarea></div>
+        <div class="field full"><label for="instLocation">מיקום במושב</label><input type="text" id="instLocation" name="instLocation" placeholder="לדוגמה: ליד המזכירות, רחוב הדר"></div>
+      </div>
+    </section>
+
     <!-- 5 -->
     <section class="card" id="s5">
       <div class="sec-head"><span class="sec-num">5</span><h2>תמונות (לא חובה)</h2></div>
@@ -458,9 +488,11 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
 
   // ---------- conditional fields ----------
   const syncConditional = () => {
-    const expert = form.regType.value === "expert";
-    document.querySelectorAll(".biz-only").forEach(el => { el.hidden = expert; });
-    document.querySelectorAll(".exp-only").forEach(el => { el.hidden = !expert; });
+    const type = form.regType.value;
+    document.querySelectorAll(".biz-only").forEach(el => { el.hidden = type !== "biz"; });
+    document.querySelectorAll(".exp-only").forEach(el => { el.hidden = type !== "expert"; });
+    document.querySelectorAll(".inst-only").forEach(el => { el.hidden = type !== "inst"; });
+    $("instTypeOtherWrap").hidden = !form.querySelector('input[name="instType"][value="אחר"]').checked;
     let n = 0;
     document.querySelectorAll("section.card .sec-num").forEach(el => { const s = el.closest("section"); if (!s.hidden && s.id !== "result") el.textContent = ++n; });
     $("expCategoryOtherWrap").hidden = !form.querySelector('input[name="expCategory"][value="אחר"]').checked;
@@ -506,7 +538,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
   function collect() {
     const fd = new FormData(form), o = {};
     for (const [k, v] of fd.entries()) { if (o[k] !== undefined) o[k] = [].concat(o[k], v); else o[k] = v; }
-    ["contactPref", "location", "area", "publish", "expOffer", "category", "expCategory"].forEach(k => { o[k] = fd.getAll(k); });
+    ["contactPref", "location", "area", "publish", "expOffer", "category", "expCategory", "instType"].forEach(k => { o[k] = fd.getAll(k); });
     o.consent = $("consent").checked; o.updates = $("updates").checked;
     o.services = services();
     return o;
@@ -574,14 +606,22 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
   function buildSummary() {
     const d = collect(), L = [];
     const line = (k, v) => { if (v && (!Array.isArray(v) || v.length)) L.push(`${k}: ${Array.isArray(v) ? v.join(", ") : v}`); };
-    const expert = d.regType === "expert";
-    L.push(expert ? "📋 בקשת הרשמה למאגר – איש/אשת מומחיות – שדה אליעזר" : "📋 בקשת הרשמה למאגר העסקים – שדה אליעזר", "");
-    L.push(`סוג רישום: ${expert ? "איש/אשת מומחיות" : "בעל/ת עסק"}`, "");
+    const expert = d.regType === "expert", inst = d.regType === "inst";
+    L.push(inst ? "📋 בקשת הרשמה למאגר – מוסד קהילה – שדה אליעזר" : expert ? "📋 בקשת הרשמה למאגר – איש/אשת מומחיות – שדה אליעזר" : "📋 בקשת הרשמה למאגר העסקים – שדה אליעזר", "");
+    L.push(`סוג רישום: ${inst ? "מוסד קהילה" : expert ? "איש/אשת מומחיות" : "בעל/ת עסק"}`, "");
     L.push("— פרטים מזהים —");
     line("שם", `${d.firstName} ${d.lastName}`); line("משק / בית", d.farmNo); line("כתובת", d.address);
     L.push("", "— התקשרות —");
     line("נייד", d.phone); line("טלפון נוסף", d.phone2); line("דוא״ל", d.email); line("התקשרות מועדפת", d.contactPref); line("אתר", d.website); line("פייסבוק", d.social); line("אינסטגרם", d.instagram); line("אחר", d.otherContact);
-    if (expert) {
+    // multi-line answers travel on one line, joined with " | " (the site splits them back into rows)
+    const oneLine = s => String(s || "").split(/\r?\n/).map(x => x.trim()).filter(Boolean).join(" | ");
+    if (inst) {
+      L.push("", "— המוסד —");
+      line("שם המוסד", d.instName);
+      line("סוג המוסד", catList(d.instType, d.instTypeOther));
+      line("על המקום", oneLine(d.instAbout)); line("שעות פתיחה", oneLine(d.instHours));
+      line("פעילויות", oneLine(d.instActivities)); line("מיקום במושב", d.instLocation);
+    } else if (expert) {
       L.push("", "— המומחיות —");
       line("מומחיות", d.expTitle);
       line("תחומים", catList(d.expCategory, d.expCategoryOther));
@@ -619,7 +659,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
     const text = buildSummary();
     $("summary").textContent = text;
     const d = collect();
-    const who = (d.regType === "expert" ? d.expTitle : d.bizName) || `${d.firstName || ""} ${d.lastName || ""}`.trim();
+    const who = (d.regType === "expert" ? d.expTitle : d.regType === "inst" ? d.instName : d.bizName) ||`${d.firstName || ""} ${d.lastName || ""}`.trim();
     const subject = `הרשמה למאגר ״זה העסק שלנו״${who ? " – " + who : ""}`;
     $("mailLink").href = `mailto:${COORDINATOR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
     $("gmailLink").href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(COORDINATOR_EMAIL)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;

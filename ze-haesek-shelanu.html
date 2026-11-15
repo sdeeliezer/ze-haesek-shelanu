@@ -161,6 +161,7 @@ main .inner { padding-block: 26px 40px; display: flex; flex-direction: column; g
 .acts ul { margin: 4px 0 0; padding-inline-start: 20px; font-size: 15px; }
 .contact-who { font-size: 15px; color: var(--muted); }
 .contact-who b { color: var(--fg); }
+.join.inst-join { background: var(--inst-soft); }
 
 /* cards */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
@@ -380,6 +381,15 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       services, showPrices: !(kv["הצגת מחירים"] || "").startsWith("לא"), discount, photos: [],
       photosAllowed: may("תמונות")
     };
+    if ((kv["סוג רישום"] || "").startsWith("מוסד")) {
+      const rows = s => (s || "").split(" | ").map(x => x.trim()).filter(Boolean).join("\n");
+      Object.assign(biz, {
+        kind: "inst", bizName: kv["שם המוסד"] || "", profession: "",
+        categories: (kv["סוג המוסד"] || "").split(" | ").map(c => c.trim().replace(/^אחר: /, "")).filter(Boolean),
+        description: rows(kv["על המקום"]), hours: rows(kv["שעות פתיחה"]), activities: rows(kv["פעילויות"]),
+        bizAddress: kv["מיקום במושב"] || ""
+      });
+    }
     return { biz, hidden: [...new Set(hidden)], found: Object.keys(kv).length > 0 };
   }
   // Records carry categories[]; older records may still hold a single `category` string.
@@ -567,11 +577,12 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
   }
 
   function listHtml() {
-    if (!DATA.businesses.length) {
-      return `<div class="empty"><h2>ההרשמה רק נפתחה!</h2><p>המאגר מתעדכן כל הזמן, וכרטיסי העסקים עולים לאתר עם כל הרשמה חדשה. יש לך עסק, מקצוע או כישרון? הירשמו עכשיו והיו מהראשונים.</p>
+    if (!DATA.businesses.length && ui.kind !== "inst") {
+      return `<div class="empty"><h2>ההרשמה רק נפתחה!</h2><p>המאגר מתעדכן כל הזמן, וכרטיסי העסקים עולים לאתר עם כל הרשמה חדשה. יש לך עסק, מקצוע או כישרון, או שאת/ה אחראי/ת על מוסד קהילה? הירשמו עכשיו והיו מהראשונים.</p>
         ${DATA.site.formUrl ? `<a class="btn primary" href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">לטופס ההרשמה</a>` : ""}</div>`;
     }
     const list = filtered();
+    if (!list.length && ui.kind === "inst" && !ui.q && !ui.cat) return instInviteHtml(true);
     if (!list.length) return `<div class="empty"><h2>לא נמצאו תוצאות</h2><p>נסו מילת חיפוש אחרת או בחרו ״הכול״.</p></div>`;
     const bizList = list.filter(isBiz), expList = list.filter(isExp), instList = list.filter(isInst);
     const block = (title, sub, items, cls) => items.length ? `<section class="group ${cls}">
@@ -580,7 +591,16 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
         <div class="grid">${items.map(cardHtml).join("")}</div></section>` : "";
     return block("עסקים ובעלי מקצוע", "שירותים ומוצרים של תושבי המושב", bizList, "g-biz")
       + block("אנשי מומחיות", "שכנים עם תחביב, כישרון או ידע, שישמחו לייעץ, ללמד ולעזור", expList, "g-exp")
-      + block("מוסדות קהילה", "שעות פתיחה, פעילויות ואנשי קשר במוסדות ובשירותים של המושב", instList, "g-inst");
+      + block("מוסדות קהילה", "שעות פתיחה, פעילויות ואנשי קשר במוסדות ובשירותים של המושב", instList, "g-inst")
+      + (ui.kind === "inst" ? instInviteHtml(false) : "");
+  }
+
+  // Invite the people who run the moshav's institutions to list them through the form.
+  function instInviteHtml(big) {
+    const form = DATA.site.formUrl ? `<a class="btn primary" href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">לרישום מוסד בטופס</a>` : "";
+    return big
+      ? `<div class="empty"><h2>מוסדות הקהילה בדרך</h2><p>בית הכנסת, המקווה, הגנים, הספרייה, המועדונים והמכולת יופיעו כאן עם שעות פתיחה, פעילויות ואנשי קשר. אחראי/ת על אחד מהם? רשמו אותו בטופס ההרשמה, בבחירה ״מוסד קהילה״.</p>${form}</div>`
+      : `<div class="join inst-join"><div><h2>אחראי/ת על מוסד קהילה?</h2><p>בית כנסת, גן, ספרייה, מועדון או מכולת: רשמו אותו בטופס, בבחירה ״מוסד קהילה״, כדי שיופיע כאן עם שעות פתיחה, פעילויות ואיש קשר.</p></div>${form}</div>`;
   }
 
   function joinHtml() {
@@ -684,7 +704,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       <div class="f"><label for="paste">הדביקו כאן את הסיכום שהתקבל במייל</label>
         <textarea id="paste" style="min-height:150px" placeholder="📋 בקשת הרשמה למאגר העסקים – שדה אליעזר&#10;…"></textarea></div>
       <div class="row"><button type="button" class="btn primary" id="parseBtn">קריאת הסיכום</button><button type="button" class="btn" id="manualBtn">מילוי ידני</button><button type="button" class="btn" id="addInstBtn">הוספת מוסד קהילה</button></div>
-      <p class="hint" style="margin:0">מוסדות קהילה (בית כנסת, גן, ספרייה…) מוסיפים כאן ישירות, בלי טופס הרשמה.</p>`;
+      <p class="hint" style="margin:0">מוסדות קהילה נרשמים בטופס (״מוסד קהילה״) ומדביקים את הסיכום כאן כרגיל, או מוסיפים ידנית בכפתור ״הוספת מוסד קהילה״.</p>`;
     const settingsTab = `<div class="form-grid">
       <div class="f"><span style="font-weight:600;font-size:14.5px">לוגו מושב שדה אליעזר</span>
         <div class="row"><div class="logo-prev">${s.moshavLogo ? `<img src="${esc(s.moshavLogo)}" alt="">` : ""}</div>
