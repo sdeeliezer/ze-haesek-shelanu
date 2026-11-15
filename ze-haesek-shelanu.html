@@ -147,6 +147,20 @@ main .inner { padding-block: 26px 40px; display: flex; flex-direction: column; g
 .offers { display: flex; flex-wrap: wrap; gap: 6px; }
 .offers span { font-size: 13.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--wheat-soft); color: var(--wheat-ink); }
 .result-line { color: var(--muted); font-size: 15px; margin: 0; }
+/* community institutions: a cool slate accent so they read as "information", not commerce */
+:root { --inst: #2f5f7a; --inst-soft: #e3eef4; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --inst: #8cc3e0; --inst-soft: #1c2c35; } }
+:root[data-theme="dark"] { --inst: #8cc3e0; --inst-soft: #1c2c35; }
+.g-inst { padding-top: 10px; }
+.g-inst .group-head .n { background: var(--inst-soft); color: var(--inst); }
+.card.inst { border-color: var(--inst); }
+.card.inst .cat { color: var(--inst); }
+.card.inst .mono { color: var(--inst); background: repeating-linear-gradient(100deg, transparent 0 22px, rgba(47,95,122,.10) 22px 40px), var(--inst-soft); }
+.info-box { display: flex; flex-direction: column; gap: 2px; background: var(--inst-soft); border-radius: 10px; padding: 10px 12px; font-size: 15px; }
+.info-box b, .acts b { font-family: var(--display); font-size: 14px; color: var(--inst); }
+.acts ul { margin: 4px 0 0; padding-inline-start: 20px; font-size: 15px; }
+.contact-who { font-size: 15px; color: var(--muted); }
+.contact-who b { color: var(--fg); }
 
 /* cards */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
@@ -251,9 +265,9 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
 (() => {
   const RESET = ':root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}';
   const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Assistant:wght@400;600;700&display=swap">';
-  const CATEGORIES = ["קולינריה, קייטרינג, חנויות מזון","חינוך ושיעורים פרטיים","מוסיקה ובמה","ביוטי וטיפוח","בייביסיטר וטיפול בילדים","בנייה","שיפוצים ותחזוקת בית","חשמל, אינסטלציה ומיזוג","אדריכלות ועיצוב פנים","טכנולוגיה ומחשבים","שיווק ופרסום","אומנות ומלאכת יד","צילום","אירועים - הפקה","רפואי ואלטרנטיבי","טיפול רגשי ואימון אישי","אירוח, לינה, תיירות ונופש","כושר וספורט","חוגים ופנאי","גינון וחקלאות","בעלי חיים","רכב ותחבורה","ניקיון ושירותי בית","ייעוץ, משפטים, ביטוח והנהלת חשבונות","אחר"];
+  const CATEGORIES = ["קולינריה, קייטרינג, חנויות מזון","חינוך ושיעורים פרטיים","מוסיקה ובמה","ביוטי וטיפוח","בייביסיטר וטיפול בילדים","בנייה","שיפוצים ותחזוקת בית","חשמל, אינסטלציה ומיזוג","אדריכלות ועיצוב פנים","טכנולוגיה ומחשבים","שיווק ופרסום","אומנות ומלאכת יד","צילום","אירועים - הפקה","רפואי ואלטרנטיבי","טיפול רגשי ואימון אישי","אירוח, לינה, תיירות ונופש","כושר וספורט","חוגים ופנאי","גינון וחקלאות","בעלי חיים","רכב ותחבורה","ניקיון ושירותי בית","ייעוץ, משפטים, ביטוח והנהלת חשבונות","דת, יהדות ומסורת","אחר"];
 
-  const EXP_CATEGORIES = ["אומנות: ציור ורישום","אומנות: קרמיקה ופיסול","אומנות: צילום ווידאו","מוזיקה, נגינה ושירה","מלאכת יד: סריגה, תפירה ורקמה","ריתוך ועבודות מתכת","נגרות ועבודות עץ","תיקונים קטנים בבית","מחשבים, טלפונים וטכנולוגיה","תיקון מכשירי חשמל, אופניים וכלים","גינון, צמחים וחקלאות","בישול ואפייה","שפות ותרגום","כתיבה, עריכה וניסוח מכתבים","ניירת, בירוקרטיה וזכויות","ספורט, כושר ותנועה","עזרה ראשונה ובריאות","אחר"];
+  const EXP_CATEGORIES = ["אומנות: ציור ורישום","אומנות: קרמיקה ופיסול","אומנות: צילום ווידאו","מוזיקה, נגינה ושירה","מלאכת יד: סריגה, תפירה ורקמה","ריתוך ועבודות מתכת","נגרות ועבודות עץ","תיקונים קטנים בבית","מחשבים, טלפונים וטכנולוגיה","תיקון מכשירי חשמל, אופניים וכלים","גינון, צמחים וחקלאות","בישול ואפייה","שפות ותרגום","כתיבה, עריכה וניסוח מכתבים","ניירת, בירוקרטיה וזכויות","ספורט, כושר ותנועה","עזרה ראשונה ובריאות","יהדות, תורה ומסורת","אחר"];
   const DATA = JSON.parse(document.getElementById("se-data").textContent);
   DATA.site = DATA.site || {}; DATA.businesses = DATA.businesses || [];
   const root = document.getElementById("root");
@@ -273,6 +287,10 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     return m ? "יש הטבה לתושבי המושב, לפרטים פנו לבעל/ת העסק" + (m[1] ? " " + m[1] : "") : d;
   };
   const isExp = b => b.kind === "expert";
+  // Community institutions (synagogue, kindergarten, library...): added by the coordinator, not via the form.
+  const INST_TYPES = ["מכולת","בית כנסת","מקווה","גן ילדים","פעוטון","ספרייה","מועדון גיל שלישי","בית ילדים","מועדון נוער","אחר"];
+  const isInst = b => b.kind === "inst";
+  const isBiz = b => !isExp(b) && !isInst(b);
   const ui = { q: "", cat: "", kind: "", admin: false, canEdit: false, tab: "add", editing: null, confirmDel: null, status: "", statusErr: false, busy: false };
   let artifactApi = null;
 
@@ -372,8 +390,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
   const roofSvg = `<svg viewBox="0 0 96 84" aria-hidden="true"><path d="M6 44 L48 8 L90 44" fill="none" stroke="var(--wheat)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 40 V76 H76 V40" fill="none" stroke="var(--hero-ink)" stroke-width="6" stroke-linejoin="round"/><path d="M48 76 V52" stroke="var(--hero-ink)" stroke-width="5" stroke-linecap="round"/><path d="M48 60 C40 58 37 52 38 46 C45 47 48 52 48 60 Z M48 56 C56 54 59 48 58 42 C51 43 48 48 48 56 Z" fill="var(--wheat)"/></svg>`;
 
   function heroHtml() {
-    const s = DATA.site, n = DATA.businesses.filter(b => !isExp(b)).length;
-    const nExp = DATA.businesses.filter(isExp).length;
+    const s = DATA.site, n = DATA.businesses.filter(isBiz).length;
+    const nExp = DATA.businesses.filter(isExp).length, nInst = DATA.businesses.filter(isInst).length;
     const moshavLogo = s.moshavLogo ? `<img src="${esc(s.moshavLogo)}" alt="לוגו מושב שדה אליעזר">` : `<span class="ph">שדה<br>אליעזר</span>`;
     const brand = s.brandLogo
       ? `<img class="brand-img" src="${esc(s.brandLogo)}" alt="זה העסק שלנו"><h1 class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">זה העסק שלנו</h1>`
@@ -385,7 +403,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       <div class="hero-main">
         <div>${brand}<p class="hero-sub">${esc(s.intro)}</p>
           ${s.formUrl ? `<a class="btn wheat cta" href="${esc(hrefSafe(s.formUrl))}" target="_blank" rel="noopener"><span class="plus" aria-hidden="true">+</span>הצטרפות למאגר</a>` : ""}</div>
-        <div class="hero-stats"><div class="stat"><b>${n}</b><span>עסקים ובעלי מקצוע</span></div><div class="stat exp"><b>${nExp}</b><span>אנשי מומחיות</span></div></div>
+        <div class="hero-stats"><div class="stat"><b>${n}</b><span>עסקים ובעלי מקצוע</span></div><div class="stat exp"><b>${nExp}</b><span>אנשי מומחיות</span></div><div class="stat"><b>${nInst}</b><span>מוסדות קהילה</span></div></div>
       </div>
     </div></header>`;
   }
@@ -395,13 +413,13 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const pool = DATA.businesses.filter(b => !ui.kind || b.kind === ui.kind);
     pool.forEach(b => catsOf(b).forEach(c => { counts[c] = (counts[c] || 0) + 1; }));
     // Always show the full, ordered category lists (empty ones dimmed). "הכול" shows both lists under their own labels.
-    const groups = ui.kind === "biz" ? [["", CATEGORIES]] : ui.kind === "expert" ? [["", EXP_CATEGORIES]]
-      : [["תחומי עסקים ובעלי מקצוע", CATEGORIES], ["תחומי מומחיות", EXP_CATEGORIES]];
+    const groups = ui.kind === "biz" ? [["", CATEGORIES]] : ui.kind === "expert" ? [["", EXP_CATEGORIES]] : ui.kind === "inst" ? [["", INST_TYPES]]
+      : [["תחומי עסקים ובעלי מקצוע", CATEGORIES], ["תחומי מומחיות", EXP_CATEGORIES], ["מוסדות קהילה", INST_TYPES]];
     const listed = new Set(groups.flatMap(g => g[1]));
     const extra = Object.keys(counts).filter(c => !listed.has(c)); // custom categories typed under "אחר"
     if (extra.length) groups[groups.length - 1] = [groups[groups.length - 1][0], [...groups[groups.length - 1][1], ...extra]];
     const chip = c => `<button type="button" class="chip${counts[c] || !pool.length ? "" : " zero"}" data-cat="${esc(c)}" aria-pressed="${ui.cat === c}">${esc(c)} <span class="n">${counts[c] || 0}</span></button>`;
-    const nB = DATA.businesses.filter(b => !isExp(b)).length, nE = DATA.businesses.length - nB;
+    const nB = DATA.businesses.filter(isBiz).length, nE = DATA.businesses.filter(isExp).length, nI = DATA.businesses.filter(isInst).length;
     // While the registry is still small (and not empty: the empty state says it), tell visitors it has just
     // opened and fills up as people register. Sits at the top so it is seen before the long category list.
     const n = DATA.businesses.length;
@@ -412,6 +430,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
         <button type="button" data-kind="" aria-pressed="${!ui.kind}">הכול</button>
         <button type="button" data-kind="biz" aria-pressed="${ui.kind === "biz"}">עסקים ובעלי מקצוע <span class="n">${nB}</span></button>
         <button type="button" data-kind="expert" aria-pressed="${ui.kind === "expert"}">אנשי מומחיות <span class="n">${nE}</span></button>
+        <button type="button" data-kind="inst" aria-pressed="${ui.kind === "inst"}">מוסדות קהילה <span class="n">${nI}</span></button>
       </div>
       <div class="search"><input id="q" type="search" placeholder="חיפוש: חשמלאי, עוגות, ריתוך, מחשבים…" aria-label="חיפוש במאגר" value="${esc(ui.q)}"></div>
       <div class="chips" role="group" aria-label="סינון לפי תחום">
@@ -422,7 +441,53 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     </div></div></div>`;
   }
 
+  function adminRowHtml(b) {
+    return ui.admin ? `<div class="admin-row">
+      <button type="button" class="btn small" data-edit="${esc(b.id)}">עריכה</button>
+      ${ui.confirmDel === b.id
+        ? `<button type="button" class="btn small danger" data-del-yes="${esc(b.id)}">להסיר מהמאגר?</button><button type="button" class="btn small ghost" data-del-no>ביטול</button>`
+        : `<button type="button" class="btn small danger" data-del="${esc(b.id)}">הסרה</button>`}
+    </div>` : "";
+  }
+  // Multi-line text (hours, activities) -> one line per row
+  const lines = s => String(s || "").split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+  // Community institution card: what it is, opening hours, activities, and who to ask.
+  function instCardHtml(b) {
+    const first = b.photos && b.photos[0];
+    const type = catsOf(b)[0] || "";
+    const media = first ? `<img src="${esc(first)}" alt="${esc(b.bizName)}" loading="lazy">` : `<div class="mono" aria-hidden="true">${esc((b.bizName || "?").trim().charAt(0))}</div>`;
+    const wa = waNumber(b.phone);
+    const site = hrefSafe(b.website);
+    const hours = lines(b.hours), acts = lines(b.activities);
+    const gallery = (b.photos || []).length > 1 ? `<div class="gallery">${b.photos.slice(1).map(p => `<img src="${esc(p)}" alt="" loading="lazy">`).join("")}</div>` : "";
+    return `<article class="card inst">
+      <div class="media">${media}</div>
+      <div class="card-body">
+        ${type ? `<div class="cat">${esc(type)}</div>` : ""}
+        <h3>${esc(b.bizName)}</h3>
+        ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
+        ${hours.length ? `<div class="info-box"><b>שעות פתיחה</b>${hours.map(l => `<span>${esc(l)}</span>`).join("")}</div>` : ""}
+        ${acts.length ? `<div class="acts"><b>פעילויות</b><ul>${acts.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>` : ""}
+        ${b.bizAddress ? `<div class="meta"><span><b>מיקום:</b> ${esc(b.bizAddress)} · <a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(b.bizAddress)}" target="_blank" rel="noopener">במפה</a></span></div>` : ""}
+        ${gallery ? `<details class="more"><summary>תמונות</summary>${gallery}</details>` : ""}
+        <div class="contact">
+          ${b.ownerName ? `<div class="contact-who">למידע נוסף: <b>${esc(b.ownerName)}</b></div>` : ""}
+          ${b.phone ? `<div class="phone-row"><span class="phone">${esc(b.phone)}</span>
+            <button type="button" class="btn small ghost" data-copy="${esc(b.phone)}">העתקה</button>
+            ${wa ? `<a class="btn small primary" href="https://wa.me/${wa}" target="_blank" rel="noopener">וואטסאפ</a>` : ""}</div>` : ""}
+          ${b.phone2 ? `<div class="links">טלפון נוסף: <span class="ltr">${esc(b.phone2)}</span></div>` : ""}
+          <div class="links">
+            ${b.email ? `<span class="ltr">${esc(b.email)}</span>` : ""}
+            ${site ? `<a href="${esc(site)}" target="_blank" rel="noopener">לאתר</a>` : ""}
+          </div>
+        </div>
+      </div>${adminRowHtml(b)}
+    </article>`;
+  }
+
   function cardHtml(b) {
+    if (isInst(b)) return instCardHtml(b);
     const exp = isExp(b);
     const first = b.photos && b.photos[0];
     const media = first ? `<img src="${esc(first)}" alt="${esc(b.bizName)}" loading="lazy">` : `<div class="mono" aria-hidden="true">${esc((b.bizName || "?").trim().charAt(0))}</div>`;
@@ -496,7 +561,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       if (ui.kind && b.kind !== ui.kind) return false;
       if (ui.cat && !catsOf(b).includes(ui.cat)) return false;
       if (!q) return true;
-      const hay = [b.bizName, b.profession, ...catsOf(b), b.description, b.ownerName, b.offer, b.tools, ...(b.services || []).map(s => s.name)].join(" ").toLowerCase();
+      const hay = [b.bizName, b.profession, ...catsOf(b), b.description, b.ownerName, b.offer, b.tools, b.activities, b.hours, ...(b.services || []).map(s => s.name)].join(" ").toLowerCase();
       return q.split(/\s+/).every(w => hay.includes(w));
     }).sort((a, b) => (a.bizName || "").localeCompare(b.bizName || "", "he"));
   }
@@ -508,13 +573,14 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     }
     const list = filtered();
     if (!list.length) return `<div class="empty"><h2>לא נמצאו תוצאות</h2><p>נסו מילת חיפוש אחרת או בחרו ״הכול״.</p></div>`;
-    const bizList = list.filter(b => !isExp(b)), expList = list.filter(isExp);
+    const bizList = list.filter(isBiz), expList = list.filter(isExp), instList = list.filter(isInst);
     const block = (title, sub, items, cls) => items.length ? `<section class="group ${cls}">
         <div class="group-head"><h2>${title}</h2><span class="n">${items.length}</span></div>
         <p class="result-line">${sub}</p>
         <div class="grid">${items.map(cardHtml).join("")}</div></section>` : "";
     return block("עסקים ובעלי מקצוע", "שירותים ומוצרים של תושבי המושב", bizList, "g-biz")
-      + block("אנשי מומחיות", "שכנים עם תחביב, כישרון או ידע, שישמחו לייעץ, ללמד ולעזור", expList, "g-exp");
+      + block("אנשי מומחיות", "שכנים עם תחביב, כישרון או ידע, שישמחו לייעץ, ללמד ולעזור", expList, "g-exp")
+      + block("מוסדות קהילה", "שעות פתיחה, פעילויות ואנשי קשר במוסדות ובשירותים של המושב", instList, "g-inst");
   }
 
   function joinHtml() {
@@ -533,16 +599,44 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
   function editorHtml() {
     const e = ui.editing; if (!e) return "";
     const b = e.biz;
-    const base = b.kind === "expert" ? EXP_CATEGORIES : CATEGORIES;
+    const base = b.kind === "expert" ? EXP_CATEGORIES : b.kind === "inst" ? INST_TYPES : CATEGORIES;
     const mine = catsOf(b);
     const cats = [...mine.filter(c => !base.includes(c)), ...base];
+    const kindSelect = `<div class="f full"><label for="e_kind">סוג רישום</label><select id="e_kind">
+        <option value="biz"${isBiz(b) ? " selected" : ""}>עסק / בעל מקצוע</option>
+        <option value="expert"${b.kind === "expert" ? " selected" : ""}>איש/אשת מומחיות</option>
+        <option value="inst"${b.kind === "inst" ? " selected" : ""}>מוסד קהילה</option></select>
+        <span class="hint">שינוי הסוג מעדכן את השדות ואת רשימת התחומים.</span></div>`;
+    const photosField = `<div class="f full"><span style="font-weight:600;font-size:14.5px">תמונות (הראשונה היא התמונה הראשית, עד 4)</span>
+        <div class="thumbs">${(b.photos || []).map((p, i) => `<div class="thumb"><img src="${esc(p)}" alt=""><button type="button" data-rmphoto="${i}" aria-label="הסרת תמונה">×</button></div>`).join("")}</div>
+        <div class="row"><label class="btn small" for="e_photos">הוספת תמונות</label><input id="e_photos" type="file" accept="image/*" multiple hidden><span class="hint">התמונות מוקטנות אוטומטית</span></div>
+      </div>`;
+    const saveRow = `<div class="row full">
+        <button type="button" class="btn primary" id="saveBiz"${ui.busy ? " disabled" : ""}>${e.isNew ? "הוספה למאגר ופרסום" : "שמירת השינויים"}</button>
+        <button type="button" class="btn ghost" id="cancelEdit">ביטול</button>
+      </div>`;
+    if (b.kind === "inst") return `<div class="form-grid" id="editor" data-bid="${esc(b.id)}">
+      ${kindSelect}
+      ${field("e_bizName", "שם המוסד *", b.bizName, { hint: "לדוגמה: בית הכנסת המרכזי, גן ״חמניות״" })}
+      <div class="f full"><span class="lbl">סוג המוסד</span><div class="chips pick" id="e_cats">
+        ${cats.map(c => `<label class="chip"><input type="checkbox" value="${esc(c)}"${mine.includes(c) ? " checked" : ""}> ${esc(c)}</label>`).join("")}
+      </div></div>
+      ${field("e_description", "על המקום", b.description, { type: "textarea", full: true })}
+      ${field("e_hours", "שעות פתיחה / זמני תפילות", b.hours, { type: "textarea", hint: "שורה לכל יום או זמן. לדוגמה: א׳–ה׳ 07:00–13:00" })}
+      ${field("e_activities", "פעילויות", b.activities || "", { type: "textarea", hint: "שורה לכל פעילות. לדוגמה: חוג קרמיקה, יום ג׳ 17:00" })}
+      ${field("e_ownerName", "איש / אשת קשר", b.ownerName)}
+      ${field("e_phone", "טלפון", b.phone)}
+      ${field("e_phone2", "טלפון נוסף", b.phone2)}
+      ${field("e_email", "דוא״ל", b.email)}
+      ${field("e_website", "אתר או קישור", b.website)}
+      ${field("e_bizAddress", "מיקום במושב", b.bizAddress || "")}
+      ${photosField}
+      ${saveRow}
+    </div>`;
     return `<div class="form-grid" id="editor" data-bid="${esc(b.id)}">
       ${e.hidden && e.hidden.length ? `<div class="note full">לפי בחירת בעל/ת העסק, הפרטים האלה לא יפורסמו והושמטו: ${esc(e.hidden.join(", "))}.</div>` : ""}
       ${b.photosAllowed === false ? `<div class="note full">בעל/ת העסק לא אישר/ה פרסום תמונות.</div>` : ""}
-      <div class="f full"><label for="e_kind">סוג רישום</label><select id="e_kind">
-        <option value="biz"${b.kind !== "expert" ? " selected" : ""}>עסק / בעל מקצוע</option>
-        <option value="expert"${b.kind === "expert" ? " selected" : ""}>איש/אשת מומחיות</option></select>
-        <span class="hint">שינוי הסוג מעדכן את רשימת התחומים.</span></div>
+      ${kindSelect}
       ${field("e_bizName", b.kind === "expert" ? "במה הוא/היא טוב/ה? *" : "שם העסק *", b.bizName)}
       ${field("e_profession", b.kind === "expert" ? "רמת ניסיון" : "מקצוע", b.profession)}
       <div class="f full"><span class="lbl">תחומים (אפשר כמה)</span><div class="chips pick" id="e_cats">
@@ -589,7 +683,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const addTab = ui.editing ? editorHtml() : `
       <div class="f"><label for="paste">הדביקו כאן את הסיכום שהתקבל במייל</label>
         <textarea id="paste" style="min-height:150px" placeholder="📋 בקשת הרשמה למאגר העסקים – שדה אליעזר&#10;…"></textarea></div>
-      <div class="row"><button type="button" class="btn primary" id="parseBtn">קריאת הסיכום</button><button type="button" class="btn" id="manualBtn">מילוי ידני</button></div>`;
+      <div class="row"><button type="button" class="btn primary" id="parseBtn">קריאת הסיכום</button><button type="button" class="btn" id="manualBtn">מילוי ידני</button><button type="button" class="btn" id="addInstBtn">הוספת מוסד קהילה</button></div>
+      <p class="hint" style="margin:0">מוסדות קהילה (בית כנסת, גן, ספרייה…) מוסיפים כאן ישירות, בלי טופס הרשמה.</p>`;
     const settingsTab = `<div class="form-grid">
       <div class="f"><span style="font-weight:600;font-size:14.5px">לוגו מושב שדה אליעזר</span>
         <div class="row"><div class="logo-prev">${s.moshavLogo ? `<img src="${esc(s.moshavLogo)}" alt="">` : ""}</div>
@@ -646,6 +741,11 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const v = id => (document.getElementById(id) || {}).value ?? "";
     const b = ui.editing.biz;
     if (document.getElementById("e_offer")) Object.assign(b, { offer: v("e_offer").trim(), availability: v("e_availability").trim(), tools: v("e_tools").trim() });
+    if (document.getElementById("e_activities")) b.activities = v("e_activities").trim();
+    // The institution editor has no business-only fields; keep their values instead of blanking them.
+    const has = id => !!document.getElementById(id);
+    const keep = {}; ["services", "discount", "social", "instagram", "otherContact", "area", "location", "farmNo", "years", "license", "contactPref", "showPrices"]
+      .forEach(k => { keep[k] = b[k]; });
     Object.assign(b, {
       kind: v("e_kind") || b.kind || "biz",
       bizName: v("e_bizName").trim(), profession: v("e_profession").trim(), categories: [...document.querySelectorAll("#e_cats input:checked")].map(i => i.value), category: "", ownerName: v("e_ownerName").trim(),
@@ -656,6 +756,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       source: (document.getElementById("e_approved") || {}).checked ? "" : (b.source || ""),
       services: v("e_services").split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => { const i = l.lastIndexOf(" – ") > 0 ? l.lastIndexOf(" – ") : l.lastIndexOf(" - "); return i > 0 ? { name: l.slice(0, i).trim(), price: l.slice(i + 3).trim() } : { name: l, price: "" }; })
     });
+    if (!has("e_services")) Object.assign(b, keep);
   }
 
   // ---------- events ----------
@@ -685,6 +786,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       ui.editing = { biz: r.biz, hidden: r.hidden, isNew: true }; setStatus("הפרטים נקראו. בדקו, הוסיפו תמונות ופרסמו."); render(); return;
     }
     if (t.id === "manualBtn") { ui.editing = { biz: blankBiz(), hidden: [], isNew: true }; ui.status = ""; render(); return; }
+    if (t.id === "addInstBtn") { ui.editing = { biz: { ...blankBiz(), kind: "inst", activities: "" }, hidden: [], isNew: true }; ui.status = ""; render(); return; }
     if (t.id === "cancelEdit") { ui.editing = null; ui.status = ""; render(); return; }
     if (t.dataset.rmphoto !== undefined) { readEditor(); ui.editing.biz.photos.splice(+t.dataset.rmphoto, 1); render(); return; }
     if (t.dataset.edit) {
