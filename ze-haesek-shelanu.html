@@ -245,6 +245,19 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
   const root = document.getElementById("root");
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   DATA.businesses.forEach(b => { if (!b.kind) b.kind = "biz"; });
+  // Categories that were renamed or split; old names map to their current ones.
+  const CAT_RENAMES = {
+    "קולינריה ומוצרי חקלאות": ["קולינריה, מזון ומוצרי חקלאות"], "מוסיקה": ["מוסיקה ובמה"], "מוסיקה - שיעורים פרטיים": ["מוסיקה ובמה"],
+    "צילום ואירועים": ["צילום", "אירועים - הפקה"], "אירוח ולינה": ["אירוח, לינה, תיירות ונופש"],
+    "גינון, חקלאות ובעלי חיים": ["גינון וחקלאות", "בעלי חיים"]
+  };
+  const renameCats = list => [...new Set((list || []).flatMap(c => CAT_RENAMES[c] || [c]))];
+  DATA.businesses.forEach(b => { if (b.categories) b.categories = renameCats(b.categories); });
+  // A resident may answer "yes" to the resident discount without describing it.
+  const discountText = d => {
+    const m = String(d || "").match(/^כן\s*(\(בתוקף עד [^)]*\))?\s*$/);
+    return m ? "יש הטבה לתושבי המושב, לפרטים פנו לבעל/ת העסק" + (m[1] ? " " + m[1] : "") : d;
+  };
   const isExp = b => b.kind === "expert";
   const ui = { q: "", cat: "", kind: "", admin: false, canEdit: false, tab: "add", editing: null, confirmDel: null, status: "", statusErr: false, busy: false };
   let artifactApi = null;
@@ -315,7 +328,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const may = f => !allowed || allowed.includes(f);
     const hidden = [];
     const take = (field, val) => { if (may(field)) return val || ""; if (val) hidden.push(field); return ""; };
-    const categories = (kv["תחומים"] || kv["תחום"] || "").split(" | ").map(c => c.trim().replace(/^אחר: /, "")).filter(Boolean);
+    const categories = renameCats((kv["תחומים"] || kv["תחום"] || "").split(" | ").map(c => c.trim().replace(/^אחר: /, "")).filter(Boolean));
     const discount = kv["הטבה לתושבים"] && kv["הטבה לתושבים"] !== "לא" ? kv["הטבה לתושבים"] : "";
     const expert = (kv["סוג רישום"] || "").startsWith("איש");
     const biz = {
@@ -437,7 +450,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
               : (b.profession ? `<div class="prof">${esc(b.profession)}</div>` : "")}
         ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
         ${offers}
-        ${b.discount ? `<div class="perk-text">${esc(b.discount)}</div>` : ""}
+        ${b.discount ? `<div class="perk-text">${esc(discountText(b.discount))}</div>` : ""}
         ${svcHtml}
         ${meta ? `<div class="meta">${meta}</div>` : ""}
         ${(more || gallery) ? `<details class="more"><summary>עוד פרטים${gallery ? " ותמונות" : ""}</summary><div class="meta" style="margin-top:6px">${more}</div>${gallery}</details>` : ""}

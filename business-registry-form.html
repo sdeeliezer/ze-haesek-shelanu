@@ -293,7 +293,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
             <label class="chip"><input type="radio" name="discount" value="כן"><span>כן</span></label>
             <label class="chip"><input type="radio" name="discount" value="לא" checked><span>לא</span></label>
           </div></div>
-        <div class="field" id="discountWrap" hidden><label for="discountText">פרטי ההטבה</label><input type="text" id="discountText" name="discountText" placeholder="לדוגמה: 10% הנחה לתושבי שדה אליעזר"></div>
+        <div class="field" id="discountWrap" hidden><label class="req" for="discountText">פרטי ההטבה</label><input type="text" id="discountText" name="discountText" placeholder="לדוגמה: 10% הנחה לתושבי שדה אליעזר"><span class="err">נא לפרט מה ההטבה</span></div>
         <div class="field" id="discountUntilWrap" hidden><label for="discountUntil">ההטבה בתוקף עד</label><input type="text" id="discountUntil" name="discountUntil" placeholder="לדוגמה: 31.12.2026, או ״ללא הגבלה״"></div>
       </div>
     </section>
@@ -453,6 +453,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
     $("expCategoryOtherWrap").hidden = !form.querySelector('input[name="expCategory"][value="אחר"]').checked;
     $("categoryOtherWrap").hidden = !form.querySelector('input[name="category"][value="אחר"]').checked;
     $("discountWrap").hidden = $("discountUntilWrap").hidden = form.discount.value !== "כן";
+    $("discountText").required = form.discount.value === "כן"; // "yes" alone tells residents nothing
     $("descCount").textContent = `${$("description").value.length} / 500 תווים`;
   };
 
