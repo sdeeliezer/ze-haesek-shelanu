@@ -201,6 +201,13 @@ details.more summary { cursor: pointer; font-weight: 600; color: var(--accent); 
   align-items: center; justify-content: space-between; flex-wrap: wrap;
 }
 .join h2 { font-size: 22px; }
+.growing {
+  display: flex; gap: 12px; align-items: flex-start; background: var(--wheat-soft); color: var(--wheat-ink);
+  border: 1px solid var(--wheat); border-radius: 14px; padding: 14px 16px;
+}
+.growing .ic { font-size: 22px; line-height: 1.3; }
+.growing p { margin: 0; font-size: 16px; }
+.growing a { color: var(--wheat-ink); font-weight: 700; }
 .join p { margin: 4px 0 0; color: var(--muted); }
 footer { color: var(--muted); font-size: 14px; text-align: center; padding-block: 0 32px; }
 
@@ -388,7 +395,12 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     if (extra.length) groups[groups.length - 1] = [groups[groups.length - 1][0], [...groups[groups.length - 1][1], ...extra]];
     const chip = c => `<button type="button" class="chip${counts[c] || !pool.length ? "" : " zero"}" data-cat="${esc(c)}" aria-pressed="${ui.cat === c}">${esc(c)} <span class="n">${counts[c] || 0}</span></button>`;
     const nB = DATA.businesses.filter(b => !isExp(b)).length, nE = DATA.businesses.length - nB;
+    // While the registry is still small (and not empty: the empty state says it), tell visitors it has just
+    // opened and fills up as people register. Sits at the top so it is seen before the long category list.
+    const n = DATA.businesses.length;
+    const growing = n > 0 && n < 20 ? `<div class="growing" role="note"><span class="ic" aria-hidden="true">🌱</span><p><b>ההרשמה רק נפתחה!</b> המאגר מתעדכן כל הזמן, וכרטיסי העסקים עולים לאתר עם כל הרשמה חדשה. חזרו לבקר בקרוב${DATA.site.formUrl ? `, ואם יש לכם עסק, מקצוע או כישרון, <a href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">הירשמו עכשיו והיו מהראשונים</a>` : ""}.</p></div>` : "";
     return `<div class="toolbar gutter"><div class="inner"><div class="box">
+      ${growing}
       <div class="seg" role="group" aria-label="מה מחפשים">
         <button type="button" data-kind="" aria-pressed="${!ui.kind}">הכול</button>
         <button type="button" data-kind="biz" aria-pressed="${ui.kind === "biz"}">עסקים ובעלי מקצוע <span class="n">${nB}</span></button>
@@ -484,7 +496,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
 
   function listHtml() {
     if (!DATA.businesses.length) {
-      return `<div class="empty"><h2>המאגר נפתח</h2><p>העסקים של שדה אליעזר יופיעו כאן ברגע שיצטרפו. יש לך עסק או מקצוע? מלאו את טופס ההרשמה, וכרטיס העסק שלכם יעלה לכאן.</p>
+      return `<div class="empty"><h2>ההרשמה רק נפתחה!</h2><p>המאגר מתעדכן כל הזמן, וכרטיסי העסקים עולים לאתר עם כל הרשמה חדשה. יש לך עסק, מקצוע או כישרון? הירשמו עכשיו והיו מהראשונים.</p>
         ${DATA.site.formUrl ? `<a class="btn primary" href="${esc(hrefSafe(DATA.site.formUrl))}" target="_blank" rel="noopener">לטופס ההרשמה</a>` : ""}</div>`;
     }
     const list = filtered();
