@@ -237,7 +237,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
 (() => {
   const RESET = ':root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}';
   const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Assistant:wght@400;600;700&display=swap">';
-  const CATEGORIES = ["קולינריה ומוצרי חקלאות","חינוך ושיעורים פרטיים","מוסיקה","ביוטי וטיפוח","בייביסיטר וטיפול בילדים","בנייה","שיפוצים ותחזוקת בית","חשמל, אינסטלציה ומיזוג","אדריכלות ועיצוב פנים","טכנולוגיה ומחשבים","שיווק ופרסום","אומנות ומלאכת יד","צילום ואירועים","רפואי ואלטרנטיבי","טיפול רגשי ואימון אישי","אירוח ולינה","כושר וספורט","גינון, חקלאות ובעלי חיים","רכב ותחבורה","ניקיון ושירותי בית","ייעוץ, משפטים, ביטוח והנהלת חשבונות","אחר"];
+  const CATEGORIES = ["קולינריה ומוצרי חקלאות","חינוך ושיעורים פרטיים","מוסיקה - שיעורים פרטיים","ביוטי וטיפוח","בייביסיטר וטיפול בילדים","בנייה","שיפוצים ותחזוקת בית","חשמל, אינסטלציה ומיזוג","אדריכלות ועיצוב פנים","טכנולוגיה ומחשבים","שיווק ופרסום","אומנות ומלאכת יד","צילום","אירועים - הפקה","רפואי ואלטרנטיבי","טיפול רגשי ואימון אישי","אירוח, לינה, תיירות ונופש","כושר וספורט","חוגים ופנאי","גינון וחקלאות","בעלי חיים","רכב ותחבורה","ניקיון ושירותי בית","ייעוץ, משפטים, ביטוח והנהלת חשבונות","אחר"];
 
   const EXP_CATEGORIES = ["אומנות: ציור ורישום","אומנות: קרמיקה ופיסול","אומנות: צילום ווידאו","מוזיקה, נגינה ושירה","מלאכת יד: סריגה, תפירה ורקמה","ריתוך ועבודות מתכת","נגרות ועבודות עץ","תיקונים קטנים בבית","מחשבים, טלפונים וטכנולוגיה","תיקון מכשירי חשמל, אופניים וכלים","גינון, צמחים וחקלאות","בישול ואפייה","שפות ותרגום","כתיבה, עריכה וניסוח מכתבים","ניירת, בירוקרטיה וזכויות","ספורט, כושר ותנועה","עזרה ראשונה ובריאות","אחר"];
   const DATA = JSON.parse(document.getElementById("se-data").textContent);
@@ -327,7 +327,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       phone: take("טלפון", kv["נייד"]), phone2: take("טלפון", kv["טלפון נוסף"]),
       email: take("דוא״ל", kv["דוא״ל"]),
       farmNo: take("מספר משק / כתובת", [kv["משק / בית"], kv["כתובת"]].filter(Boolean).join(", ")),
-      website: take("אתר ורשתות", kv["אתר"]), social: take("אתר ורשתות", kv["רשתות"]),
+      website: take("אתר ורשתות", kv["אתר"]), social: take("אתר ורשתות", kv["פייסבוק"] || kv["רשתות"]),
+      instagram: take("אתר ורשתות", kv["אינסטגרם"]), otherContact: take("אתר ורשתות", kv["אחר"]),
       bizAddress: kv["כתובת העסק"] || "",
       contactPref: kv["התקשרות מועדפת"] || "", location: kv["מיקום פעילות"] || "", area: kv["אזור שירות"] || "",
       hours: kv["שעות פעילות"] || "", years: kv["שנות ניסיון"] || "", license: kv["רישיון / הסמכה"] || "",
@@ -338,7 +339,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
   }
   // Records carry categories[]; older records may still hold a single `category` string.
   const catsOf = b => (b.categories && b.categories.length) ? b.categories : (b.category ? [b.category] : []);
-  const blankBiz = () => ({ id: uid(), kind: "biz", offer: "", availability: "", tools: "", bizName: "", profession: "", categories: [], description: "", ownerName: "", phone: "", phone2: "", email: "", farmNo: "", bizAddress: "", website: "", social: "", contactPref: "", location: "", area: "", hours: "", years: "", license: "", services: [], showPrices: true, discount: "", photos: [], photosAllowed: true });
+  const blankBiz = () => ({ id: uid(), kind: "biz", offer: "", availability: "", tools: "", bizName: "", profession: "", categories: [], description: "", ownerName: "", phone: "", phone2: "", email: "", farmNo: "", bizAddress: "", website: "", social: "", instagram: "", otherContact: "",contactPref: "", location: "", area: "", hours: "", years: "", license: "", services: [], showPrices: true, discount: "", photos: [], photosAllowed: true });
 
   // ---------- rendering ----------
   const roofSvg = `<svg viewBox="0 0 96 84" aria-hidden="true"><path d="M6 44 L48 8 L90 44" fill="none" stroke="var(--wheat)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 40 V76 H76 V40" fill="none" stroke="var(--hero-ink)" stroke-width="6" stroke-linejoin="round"/><path d="M48 76 V52" stroke="var(--hero-ink)" stroke-width="5" stroke-linecap="round"/><path d="M48 60 C40 58 37 52 38 46 C45 47 48 52 48 60 Z M48 56 C56 54 59 48 58 42 C51 43 48 48 48 56 Z" fill="var(--wheat)"/></svg>`;
@@ -396,7 +397,11 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const svcs = (b.services || []).filter(s => s.name);
     const svcHtml = svcs.length ? `<ul class="svc-list">${svcs.map(s => `<li><span>${esc(s.name)}</span><span class="p">${esc(b.showPrices && s.price ? s.price : (b.showPrices ? "" : "לפי הצעת מחיר"))}</span></li>`).join("")}</ul>` : "";
     const wa = waNumber(b.phone);
-    const site = hrefSafe(b.website), social = hrefSafe(/^(https?:\/\/|www\.|[\w-]+\.[a-z]{2,})/i.test(b.social || "") ? b.social : "");
+    const isUrl = s => /^(https?:\/\/|www\.|[\w-]+\.[a-z]{2,})/i.test(s || "");
+    const site = hrefSafe(b.website), social = hrefSafe(isUrl(b.social) ? b.social : "");
+    // Instagram: accept a link, or an @handle / bare handle and build the profile link
+    const ig = (b.instagram || "").trim();
+    const igHref = isUrl(ig) ? hrefSafe(ig) : (/^@?[\w.]{2,30}$/.test(ig) ? "https://www.instagram.com/" + ig.replace(/^@/, "") : "");
     const meta = [
       b.bizAddress && `<span><b>כתובת העסק:</b> ${esc(b.bizAddress)} · <a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(b.bizAddress)}" target="_blank" rel="noopener">במפה</a></span>`,
       b.availability && `<span><b>זמינות:</b> ${esc(b.availability)}</span>`,
@@ -444,7 +449,9 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
           <div class="links">
             ${b.email ? `<span class="ltr">${esc(b.email)}</span>` : ""}
             ${site ? `<a href="${esc(site)}" target="_blank" rel="noopener">לאתר</a>` : ""}
-            ${social ? `<a href="${esc(social)}" target="_blank" rel="noopener">רשתות חברתיות</a>` : (b.social ? `<span class="ltr">${esc(b.social)}</span>` : "")}
+            ${social ? `<a href="${esc(social)}" target="_blank" rel="noopener">פייסבוק</a>` : (b.social ? `<span>פייסבוק: ${esc(b.social)}</span>` : "")}
+            ${igHref ? `<a href="${esc(igHref)}" target="_blank" rel="noopener">אינסטגרם</a>` : (ig ? `<span>אינסטגרם: <span class="ltr">${esc(ig)}</span></span>` : "")}
+            ${b.otherContact ? (isUrl(b.otherContact) ? `<a href="${esc(hrefSafe(b.otherContact))}" target="_blank" rel="noopener">קישור נוסף</a>` : `<span>${esc(b.otherContact)}</span>`) : ""}
           </div>
         </div>
       </div>${admin}
@@ -523,7 +530,9 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       ${field("e_phone2", "טלפון נוסף", b.phone2)}
       ${field("e_email", "דוא״ל", b.email)}
       ${field("e_website", "אתר", b.website)}
-      ${field("e_social", "פייסבוק / אינסטגרם", b.social)}
+      ${field("e_social", "פייסבוק", b.social)}
+      ${field("e_instagram", "אינסטגרם", b.instagram || "")}
+      ${field("e_otherContact", "אחר", b.otherContact || "")}
       ${field("e_area", "אזור שירות", b.area)}
       ${field("e_hours", "שעות פעילות", b.hours)}
       ${field("e_bizAddress", "כתובת בית העסק (כולל יישוב)", b.bizAddress || "")}
@@ -596,7 +605,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
       kind: v("e_kind") || b.kind || "biz",
       bizName: v("e_bizName").trim(), profession: v("e_profession").trim(), categories: [...document.querySelectorAll("#e_cats input:checked")].map(i => i.value), category: "", ownerName: v("e_ownerName").trim(),
       description: v("e_description").trim(), discount: v("e_discount").trim(), phone: v("e_phone").trim(), phone2: v("e_phone2").trim(),
-      email: v("e_email").trim(), website: v("e_website").trim(), social: v("e_social").trim(), area: v("e_area").trim(), hours: v("e_hours").trim(),
+      email: v("e_email").trim(), website: v("e_website").trim(), social: v("e_social").trim(), instagram: v("e_instagram").trim(), otherContact: v("e_otherContact").trim(), area: v("e_area").trim(), hours: v("e_hours").trim(),
       bizAddress: v("e_bizAddress").trim(), location: v("e_location").trim(), farmNo: v("e_farmNo").trim(), years: v("e_years").trim(), license: v("e_license").trim(), contactPref: v("e_contactPref").trim(),
       showPrices: !!(document.getElementById("e_showPrices") || {}).checked,
       source: (document.getElementById("e_approved") || {}).checked ? "" : (b.source || ""),

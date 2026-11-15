@@ -186,7 +186,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
 
     <!-- 1 -->
     <section class="card" id="s1">
-      <div class="sec-head"><span class="sec-num">1</span><h2>פרטים מזהים</h2></div>
+      <div class="sec-head"><span class="sec-num">1</span><h2>פרטים מזהים של העסק / בעל המקצוע</h2></div>
       <div class="grid">
         <div class="field"><label class="req" for="firstName">שם פרטי</label><input type="text" id="firstName" name="firstName" required autocomplete="given-name"><span class="err">נא למלא שם פרטי</span></div>
         <div class="field"><label class="req" for="lastName">שם משפחה</label><input type="text" id="lastName" name="lastName" required autocomplete="family-name"><span class="err">נא למלא שם משפחה</span></div>
@@ -197,7 +197,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
 
     <!-- 2 -->
     <section class="card" id="s2">
-      <div class="sec-head"><span class="sec-num">2</span><h2>פרטי התקשרות</h2></div>
+      <div class="sec-head"><span class="sec-num">2</span><h2>פרטי התקשרות לעסק / לבעל המקצוע</h2></div>
       <div class="grid">
         <div class="field"><label class="req" for="phone">טלפון נייד</label><input type="tel" id="phone" name="phone" required inputmode="tel" placeholder="050-0000000" autocomplete="tel"><span class="err">נא למלא מספר טלפון תקין</span></div>
         <div class="field"><label for="phone2">טלפון נוסף / טלפון העסק</label><input type="tel" id="phone2" name="phone2" inputmode="tel"></div>
@@ -210,7 +210,9 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
             <label class="chip"><input type="checkbox" name="contactPref" value="דוא״ל"><span>דוא״ל</span></label>
           </div></div>
         <div class="field"><label for="website">אתר אינטרנט</label><input type="url" id="website" name="website" placeholder="https://"></div>
-        <div class="field"><label for="social">פייסבוק / אינסטגרם</label><input type="text" id="social" name="social" placeholder="קישור או שם משתמש"></div>
+        <div class="field"><label for="social">פייסבוק</label><input type="text" id="social" name="social" placeholder="קישור לעמוד או שם העמוד"></div>
+        <div class="field"><label for="instagram">אינסטגרם</label><input type="text" id="instagram" name="instagram" placeholder="קישור או @שם משתמש"></div>
+        <div class="field"><label for="otherContact">אחר</label><input type="text" id="otherContact" name="otherContact"></div>
       </div>
     </section>
 
@@ -219,12 +221,12 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
       <div class="sec-head"><span class="sec-num">3</span><h2>העסק והמקצוע</h2></div>
       <div class="grid">
         <div class="field"><label class="req" for="bizName">שם העסק</label><input type="text" id="bizName" name="bizName" required placeholder="אם אין שם לעסק, כתבו את שמכם"><span class="err">נא למלא שם עסק</span></div>
-        <div class="field"><label class="req" for="profession">מקצוע / תפקיד</label><input type="text" id="profession" name="profession" required placeholder="לדוגמה: חשמלאי מוסמך, קוסמטיקאית"><span class="err">נא למלא מקצוע</span></div>
+        <div class="field"><label class="req" for="profession">תחום / מקצוע / תפקיד</label><input type="text" id="profession" name="profession" required placeholder="לדוגמה: חשמלאי מוסמך, קוסמטיקאית"><span class="err">נא למלא תחום, מקצוע או תפקיד</span></div>
         <div class="field full"><span class="label req">תחומים</span><span class="hint">אפשר לבחור כמה תחומים</span>
           <div class="chips cat-group" id="category" role="group" aria-label="תחומי העסק">
             <label class="chip"><input type="checkbox" name="category" value="קולינריה ומוצרי חקלאות"><span>קולינריה ומוצרי חקלאות</span></label>
             <label class="chip"><input type="checkbox" name="category" value="חינוך ושיעורים פרטיים"><span>חינוך ושיעורים פרטיים</span></label>
-            <label class="chip"><input type="checkbox" name="category" value="מוסיקה"><span>מוסיקה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="מוסיקה - שיעורים פרטיים"><span>מוסיקה - שיעורים פרטיים</span></label>
             <label class="chip"><input type="checkbox" name="category" value="ביוטי וטיפוח"><span>ביוטי וטיפוח</span></label>
             <label class="chip"><input type="checkbox" name="category" value="בייביסיטר וטיפול בילדים"><span>בייביסיטר וטיפול בילדים</span></label>
             <label class="chip"><input type="checkbox" name="category" value="בנייה"><span>בנייה</span></label>
@@ -234,12 +236,15 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
             <label class="chip"><input type="checkbox" name="category" value="טכנולוגיה ומחשבים"><span>טכנולוגיה ומחשבים</span></label>
             <label class="chip"><input type="checkbox" name="category" value="שיווק ופרסום"><span>שיווק ופרסום</span></label>
             <label class="chip"><input type="checkbox" name="category" value="אומנות ומלאכת יד"><span>אומנות ומלאכת יד</span></label>
-            <label class="chip"><input type="checkbox" name="category" value="צילום ואירועים"><span>צילום ואירועים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="צילום"><span>צילום</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אירועים - הפקה"><span>אירועים - הפקה</span></label>
             <label class="chip"><input type="checkbox" name="category" value="רפואי ואלטרנטיבי"><span>רפואי ואלטרנטיבי</span></label>
             <label class="chip"><input type="checkbox" name="category" value="טיפול רגשי ואימון אישי"><span>טיפול רגשי ואימון אישי</span></label>
-            <label class="chip"><input type="checkbox" name="category" value="אירוח ולינה"><span>אירוח ולינה</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="אירוח, לינה, תיירות ונופש"><span>אירוח, לינה, תיירות ונופש</span></label>
             <label class="chip"><input type="checkbox" name="category" value="כושר וספורט"><span>כושר וספורט</span></label>
-            <label class="chip"><input type="checkbox" name="category" value="גינון, חקלאות ובעלי חיים"><span>גינון, חקלאות ובעלי חיים</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="חוגים ופנאי"><span>חוגים ופנאי</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="גינון וחקלאות"><span>גינון וחקלאות</span></label>
+            <label class="chip"><input type="checkbox" name="category" value="בעלי חיים"><span>בעלי חיים</span></label>
             <label class="chip"><input type="checkbox" name="category" value="רכב ותחבורה"><span>רכב ותחבורה</span></label>
             <label class="chip"><input type="checkbox" name="category" value="ניקיון ושירותי בית"><span>ניקיון ושירותי בית</span></label>
             <label class="chip"><input type="checkbox" name="category" value="ייעוץ, משפטים, ביטוח והנהלת חשבונות"><span>ייעוץ, משפטים, ביטוח והנהלת חשבונות</span></label>
@@ -249,7 +254,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
         <div class="field full"><label class="req" for="description">תיאור קצר של העסק</label>
           <textarea id="description" name="description" required maxlength="500" placeholder="2–3 משפטים שיופיעו במאגר: מה אתם עושים, למי זה מתאים, מה מייחד אתכם"></textarea>
           <span class="hint" id="descCount">0 / 500 תווים</span><span class="err">נא לכתוב תיאור קצר</span></div>
-        <div class="field"><label for="years">שנות ניסיון</label><input type="number" id="years" name="years" min="0" max="70" inputmode="numeric"></div>
+        <div class="field"><label for="years">שנות ניסיון</label><input type="text" id="years" name="years" placeholder="לדוגמה: 12, או ״מאז 2010״"></div>
         <div class="field"><label for="license">רישיון / הסמכה / תעודה</label><input type="text" id="license" name="license" placeholder="לדוגמה: רישיון חשמלאי ראשי"></div>
         <div class="field full"><span class="label">איפה העסק פועל?</span>
           <div class="chips" role="group" aria-label="מיקום פעילות">
@@ -288,7 +293,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
             <label class="chip"><input type="radio" name="discount" value="כן"><span>כן</span></label>
             <label class="chip"><input type="radio" name="discount" value="לא" checked><span>לא</span></label>
           </div></div>
-        <div class="field full" id="discountWrap" hidden><label for="discountText">פרטי ההטבה</label><input type="text" id="discountText" name="discountText" placeholder="לדוגמה: 10% הנחה לתושבי שדה אליעזר"></div>
+        <div class="field" id="discountWrap" hidden><label for="discountText">פרטי ההטבה</label><input type="text" id="discountText" name="discountText" placeholder="לדוגמה: 10% הנחה לתושבי שדה אליעזר"></div>
+        <div class="field" id="discountUntilWrap" hidden><label for="discountUntil">ההטבה בתוקף עד</label><input type="text" id="discountUntil" name="discountUntil" placeholder="לדוגמה: 31.12.2026, או ״ללא הגבלה״"></div>
       </div>
     </section>
 
@@ -446,7 +452,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
     document.querySelectorAll("section.card .sec-num").forEach(el => { const s = el.closest("section"); if (!s.hidden && s.id !== "result") el.textContent = ++n; });
     $("expCategoryOtherWrap").hidden = !form.querySelector('input[name="expCategory"][value="אחר"]').checked;
     $("categoryOtherWrap").hidden = !form.querySelector('input[name="category"][value="אחר"]').checked;
-    $("discountWrap").hidden = form.discount.value !== "כן";
+    $("discountWrap").hidden = $("discountUntilWrap").hidden = form.discount.value !== "כן";
     $("descCount").textContent = `${$("description").value.length} / 500 תווים`;
   };
 
@@ -560,7 +566,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
     L.push("— פרטים מזהים —");
     line("שם", `${d.firstName} ${d.lastName}`); line("משק / בית", d.farmNo); line("כתובת", d.address);
     L.push("", "— התקשרות —");
-    line("נייד", d.phone); line("טלפון נוסף", d.phone2); line("דוא״ל", d.email); line("התקשרות מועדפת", d.contactPref); line("אתר", d.website); line("רשתות", d.social);
+    line("נייד", d.phone); line("טלפון נוסף", d.phone2); line("דוא״ל", d.email); line("התקשרות מועדפת", d.contactPref); line("אתר", d.website); line("פייסבוק", d.social); line("אינסטגרם", d.instagram); line("אחר", d.otherContact);
     if (expert) {
       L.push("", "— המומחיות —");
       line("מומחיות", d.expTitle);
@@ -580,7 +586,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; }
       L.push(`• ${s.name} – ${price}`);
     }); else L.push("לא צוינו שירותים");
     line("הצגת מחירים", d.pricePolicy);
-    line("הטבה לתושבים", d.discount === "כן" ? (d.discountText || "כן") : "לא");
+    line("הטבה לתושבים", d.discount === "כן" ? (d.discountText || "כן") + (d.discountUntil ? ` (בתוקף עד ${d.discountUntil})` : "") : "לא");
     }
     L.push("", "— תמונות —");
     L.push(photos.length ? `${photos.length} תמונות יצורפו למייל (${photos.map(p => p.file.name).join(", ")})` : "ללא תמונות");
