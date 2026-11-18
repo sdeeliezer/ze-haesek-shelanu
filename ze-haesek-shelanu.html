@@ -733,8 +733,8 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     const s = DATA.site, name = (s.coordinatorName || "").trim(), phone = (s.coordinatorPhone || "").trim();
     const wa = waNumber(phone);
     const phoneHtml = phone ? (wa ? ` <a class="coord-phone" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(phone)}</a>` : ` <span class="coord-phone">${esc(phone)}</span>`) : "";
-    const contact = (name || phone) ? ` · למידע נוסף והכוונה ניתן לפנות ל${esc(name)}${phoneHtml}` : "";
-    return `<div class="sponsor">בחסות ועדת קהילה שדה אליעזר${contact}</div>`;
+    const contact = (name || phone) ? ` · להכוונה ומידע נוסף ניתן לפנות ל${esc(name)}${phoneHtml}` : "";
+    return `<div class="sponsor">האתר ביוזמת וועדת קהילה שדה אליעזר${contact}</div>`;
   }
 
   function render() {
