@@ -225,13 +225,8 @@ details.more summary { cursor: pointer; font-weight: 600; color: var(--accent); 
 .growing a { color: var(--wheat-ink); font-weight: 700; }
 .join p { margin: 4px 0 0; color: var(--muted); }
 footer { color: var(--muted); font-size: 14px; text-align: center; padding-block: 0 32px; }
-.coord {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px;
-  color: var(--fg); font-size: 16px;
-}
-.coord-label { font-weight: 700; color: var(--accent); }
-.coord-phone { font-family: var(--display); font-weight: 600; direction: ltr; unicode-bidi: isolate; user-select: all; font-variant-numeric: tabular-nums; }
+.sponsor { margin-top: 6px; font-size: 13px; }
+.coord-phone { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; color: inherit; }
 
 /* admin panel */
 .panel { background: var(--surface); border: 2px solid var(--wheat); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
@@ -732,15 +727,14 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     </section>`;
   }
 
-  // Registry coordinator contact, set in "לוגו והגדרות" (kept in the page data, not the code).
-  function coordinatorHtml() {
+  // Small sponsor + contact line at the very bottom. The coordinator's name and phone are set in
+  // "לוגו והגדרות" (kept in the page data, not the code); the phone links to WhatsApp.
+  function sponsorHtml() {
     const s = DATA.site, name = (s.coordinatorName || "").trim(), phone = (s.coordinatorPhone || "").trim();
-    if (!name && !phone) return "";
     const wa = waNumber(phone);
-    return `<div class="coord"><span class="coord-label">למידע נוסף והכוונה:</span>
-      <span>מרכזת המאגר${name ? ` <b>${esc(name)}</b>` : ""}</span>
-      ${phone ? `<span class="coord-phone">${esc(phone)}</span>` : ""}
-      ${wa ? `<a class="btn small primary" href="https://wa.me/${wa}" target="_blank" rel="noopener">וואטסאפ</a>` : ""}</div>`;
+    const phoneHtml = phone ? (wa ? ` <a class="coord-phone" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(phone)}</a>` : ` <span class="coord-phone">${esc(phone)}</span>`) : "";
+    const contact = (name || phone) ? ` · למידע נוסף והכוונה ניתן לפנות ל${esc(name)}${phoneHtml}` : "";
+    return `<div class="sponsor">בחסות ועדת קהילה שדה אליעזר${contact}</div>`;
   }
 
   function render() {
@@ -751,7 +745,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     if (ui.editing && ed && ed.dataset.bid === ui.editing.biz.id) readEditor();
     root.innerHTML = heroHtml() + toolbarHtml()
       + `<main class="gutter"><div class="inner">${panelHtml()}${listHtml()}${joinHtml()}</div></main>`
-      + `<footer class="gutter"><div class="inner">${coordinatorHtml()}זה העסק שלנו · מאגר העסקים של מושב שדה אליעזר`
+      + `<footer class="gutter"><div class="inner">זה העסק שלנו · מאגר העסקים של מושב שדה אליעזר${sponsorHtml()}`
       + (ui.canEdit ? `<div class="admin-entry"><button class="btn small ghost" id="adminToggle" type="button">${ui.admin ? "סגירת הניהול" : "ניהול המאגר"}</button></div>` : "")
       + `</div></footer>`;
     if (focusId) { const el = document.getElementById(focusId); if (el) { el.focus(); if (caret != null) el.setSelectionRange(caret, caret); } }
