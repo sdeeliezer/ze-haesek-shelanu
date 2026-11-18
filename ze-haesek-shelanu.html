@@ -712,8 +712,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
         <span class="hint">בלי קובץ, הדף מציג את הסמל המעוצב שבראש הדף.</span></div>
       ${field("s_intro", "משפט פתיחה", s.intro, { type: "textarea", full: true })}
       ${field("s_formUrl", "קישור לטופס ההרשמה", s.formUrl, { full: true })}
-      ${field("s_coordName", "שם מרכזת המאגר (מופיע בתחתית הדף)", s.coordinatorName || "")}
-      ${field("s_coordPhone", "טלפון מרכזת המאגר", s.coordinatorPhone || "", { hint: "ריק = השורה לא תוצג" })}
+      ${field("s_coordName", "שם מקים/ת האתר (מופיע בתחתית הדף)", s.coordinatorName || "", { hint: "ריק = ״בהקמה של…״ לא יוצג" })}
       <div class="row full"><button type="button" class="btn primary" id="saveSettings"${ui.busy ? " disabled" : ""}>שמירה ופרסום</button></div>
     </div>`;
     return `<section class="panel" aria-label="ניהול המאגר">
@@ -727,14 +726,11 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     </section>`;
   }
 
-  // Small sponsor + contact line at the very bottom. The coordinator's name and phone are set in
-  // "לוגו והגדרות" (kept in the page data, not the code); the phone links to WhatsApp.
+  // Small credit lines at the very bottom. The builder's name is set in "לוגו והגדרות"
+  // (kept in the page data, not the code).
   function sponsorHtml() {
-    const s = DATA.site, name = (s.coordinatorName || "").trim(), phone = (s.coordinatorPhone || "").trim();
-    const wa = waNumber(phone);
-    const phoneHtml = phone ? (wa ? ` <a class="coord-phone" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(phone)}</a>` : ` <span class="coord-phone">${esc(phone)}</span>`) : "";
-    const contact = (name || phone) ? ` להכוונה ומידע נוסף ניתן לפנות ל${esc(name)}${phoneHtml}` : "";
-    return `<div class="sponsor">האתר בחסות וועדת קהילה שדה אליעזר.${contact}</div>`;
+    const name = (DATA.site.coordinatorName || "").trim();
+    return `<div class="sponsor">האתר ביוזמת ועדת קהילה שדה אליעזר${name ? `, בהקמה של ${esc(name)}` : ""}.<br>לשאלות, מידע ולהכוונה ניתן לפנות לנציגי ועדת הקהילה</div>`;
   }
 
   function render() {
@@ -824,7 +820,7 @@ footer { color: var(--muted); font-size: 14px; text-align: center; padding-block
     if (t.dataset.clearlogo) { DATA.site[t.dataset.clearlogo] = ""; render(); setStatus("הלוגו יוסר אחרי ״שמירה ופרסום״."); return; }
     if (t.id === "saveSettings") {
       const site = { ...DATA.site, intro: document.getElementById("s_intro").value.trim(), formUrl: document.getElementById("s_formUrl").value.trim(),
-        coordinatorName: document.getElementById("s_coordName").value.trim(), coordinatorPhone: document.getElementById("s_coordPhone").value.trim() };
+        coordinatorName: document.getElementById("s_coordName").value.trim(), coordinatorPhone: "" };
       await save({ ...DATA, site }, "ההגדרות נשמרו. הדף נטען מחדש…"); return;
     }
   });
